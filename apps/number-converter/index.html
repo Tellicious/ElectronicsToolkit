@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="../../manifest.json">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="number-converter.css">
+  <title>Number Converter — Electronics Toolkit</title>
+  <script src="../../assets/app.js"></script>
+</head>
+
+<body class="number-app">
+  <header class="appbar" id="appbar">
+    <a class="appbar__back" href="../../index.html" aria-label="Back">
+      <svg width="11" height="18" viewBox="0 0 11 18" fill="none">
+        <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <span>Electronics Toolkit</span>
+    </a>
+    <span class="appbar__spacer"></span>
+    <button class="appbar__action" id="clearBtn" type="button">Clear</button>
+  </header>
+
+  <main class="number-shell" aria-label="Decimal, hexadecimal and binary converter">
+    <section class="panel panel--input" aria-labelledby="decimalLabel">
+      <div class="panel__head">
+        <label id="decimalLabel" class="panel__label" for="decimalInput">Decimal</label>
+      </div>
+      <textarea id="decimalInput" class="value-input" inputmode="numeric" autocomplete="off" autocorrect="off"
+        autocapitalize="none" spellcheck="false" rows="1" wrap="off" aria-describedby="statusText"></textarea>
+    </section>
+
+    <section class="panel panel--input" aria-labelledby="hexLabel">
+      <div class="panel__head">
+        <label id="hexLabel" class="panel__label" for="hexInput">Hex</label>
+        <span class="panel__hint">0x optional</span>
+      </div>
+      <textarea id="hexInput" class="value-input value-input--mono" inputmode="text" autocomplete="off"
+        autocorrect="off" autocapitalize="characters" spellcheck="false" rows="1" wrap="off"
+        aria-describedby="statusText"></textarea>
+    </section>
+
+    <section class="panel panel--binary" aria-labelledby="binaryLabel">
+      <div class="panel__head">
+        <h2 id="binaryLabel" class="panel__label">Binary</h2>
+        <span class="panel__hint">tap a bit to flip it</span>
+      </div>
+      <div class="binary-grid" id="binaryGrid" role="group" aria-label="64 binary bits"></div>
+    </section>
+
+    <p id="statusText" class="status" aria-live="polite"></p>
+  </main>
+
+  <script src="number-converter.js"></script>
+  <!-- Service worker registration lives in assets/app.js (shared by every page). -->
+</body>
+
+</html>

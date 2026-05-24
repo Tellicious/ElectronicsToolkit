@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="../../manifest.json">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="resistor.css">
+  <title>Resistor — Electronics Toolkit</title>
+  <script src="../../assets/app.js"></script>
+</head>
+
+<body class="resistor-app">
+
+  <header class="appbar" id="appbar">
+    <a class="appbar__back" href="../../index.html" aria-label="Back">
+      <svg width="11" height="18" viewBox="0 0 11 18" fill="none">
+        <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <span>Electronics Toolkit</span>
+    </a>
+    <div class="appbar__spacer"></div>
+    <div class="appbar__cluster">
+      <label class="appbar__label" id="bandsLabel">Bands</label>
+      <div class="seg seg--compact" role="tablist" aria-labelledby="bandsLabel">
+        <button class="seg__btn seg__btn--active" data-bands="4" role="tab" aria-selected="true"
+          aria-label="4 bands">4</button>
+        <button class="seg__btn" data-bands="5" role="tab" aria-selected="false" aria-label="5 bands">5</button>
+      </div>
+      <button class="appbar__icon" id="openLookup" aria-label="Open reverse lookup">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
+          <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ====================== PICKER VIEW ====================== -->
+  <section class="view view--picker" id="view-picker" data-active="true">
+
+    <!-- Compact hero: render + value -->
+    <div class="picker__top">
+      <div class="resistor-render" id="resistorRender" aria-label="Resistor preview"></div>
+
+      <div class="picker__readout">
+        <div class="result__value" id="resultValue">—</div>
+        <div class="result__meta" id="resultMeta"></div>
+      </div>
+    </div>
+
+    <!-- Column picker fills remaining space -->
+    <div class="picker__columns" id="pickerColumns">
+      <!-- columns rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Reverse-lookup modal sheet -->
+  <div class="sheet" id="lookupSheet" hidden aria-modal="true" role="dialog" aria-labelledby="lookupTitle">
+    <div class="sheet__scrim" data-close></div>
+    <div class="sheet__panel" role="document">
+      <div class="sheet__grabber" aria-hidden="true"></div>
+      <header class="sheet__head">
+        <h2 class="sheet__title" id="lookupTitle">Reverse lookup</h2>
+        <button class="sheet__close" data-close aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
+      </header>
+      <div class="sheet__body">
+        <label class="sheet__label" for="reverseInput">Enter a resistance value</label>
+        <div class="sheet__row">
+          <input type="text" class="sheet__input" id="reverseInput" placeholder="e.g. 4.7k, 220, 1M, 4k7"
+            autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+          <button class="sheet__go" id="reverseGo">Show</button>
+        </div>
+        <p class="sheet__hint" id="reverseHint">Accepts forms like <code>4.7k</code>, <code>4k7</code>,
+          <code>220</code>, <code>1M</code>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="resistor.js"></script>
+  <!-- Service worker registration lives in assets/app.js (shared by every page). -->
+</body>
+
+</html>

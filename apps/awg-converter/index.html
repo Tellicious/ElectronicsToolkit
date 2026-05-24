@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <script src="../../assets/app.js"></script>
+    <title>AWG Converter — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+        <section class="tool-card">
+            <h2 class="tool-card__title">Wire Size</h2>
+            <p class="tool-note">Enter any one field; the others update live.</p>
+            <div class="tool-row"><label><span class="tool-label">AWG</span><input id="awg" class="tool-input"
+                        inputmode="numeric" step="1" placeholder="24"></label><span class="tool-unit"></span></div>
+            <div class="tool-row-group">
+                <div class="tool-row"><label><span class="tool-label">Diameter</span><input id="mm" class="tool-input"
+                            inputmode="decimal"></label><span class="tool-unit">mm</span></div>
+                <div class="tool-row"><label><input id="inch" class="tool-input" inputmode="decimal"></label><span
+                        class="tool-unit">in</span></div>
+            </div>
+            <div class="tool-row-group">
+                <div class="tool-row"><label><span class="tool-label">Section area</span><input id="mm2"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">mm²</span></div>
+                <div class="tool-row"><label><input id="in2" class="tool-input" inputmode="decimal"></label><span
+                        class="tool-unit">in²</span></div>
+            </div>
+        </section>
+    </main>
+    <script src="awg-converter.js"></script>
+</body>
+
+</html>

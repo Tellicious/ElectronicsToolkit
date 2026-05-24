@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <script src="../../assets/app.js"></script>
+    <title>Settings — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a>
+        <h1 class="appbar__title">Settings</h1><span class="appbar__spacer"></span>
+    </header>
+    <main class="tool-shell">
+        <section class="tool-card">
+            <h2 class="tool-card__title">Appearance</h2>
+            <div class="settings-list">
+                <div class="settings-item">
+                    <div><strong>Theme</strong><span>Follow system, light, or dark.</span></div><select id="themeSelect"
+                        class="tool-select" style="max-width:160px">
+                        <option value="auto">Auto</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+            </div>
+            <p class="tool-note">More global options can be added here without changing the individual utilities.</p>
+        </section>
+    </main>
+    <script>const s = document.getElementById('themeSelect'); s.value = window.UtilitiesSettings.theme; s.addEventListener('change', () => { window.UtilitiesSettings.theme = s.value });</script>
+</body>
+
+</html>

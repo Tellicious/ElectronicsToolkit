@@ -1,0 +1,252 @@
+/* =========================================================
+   Number Converter sub-app
+   ========================================================= */
+
+.number-app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.number-shell {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding:
+    12px calc(var(--safe-right) + 14px) calc(var(--safe-bottom) + 14px) calc(var(--safe-left) + 14px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.panel--input {
+  min-height: 124px;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel--binary {
+  padding: 0 10px 12px;
+}
+
+.panel__head {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px 0;
+}
+
+.panel__label {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.panel__hint {
+  color: var(--ink-3);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.value-input {
+  flex: 0 0 82px;
+  margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+  resize: none;
+  background: transparent;
+  color: var(--ink);
+  padding: 30px 20px 12px 5px;
+
+  font-family: var(--font-mono);
+  font-size: var(--decimal-font-size, 26px);
+  font-weight: 650;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+
+  text-align: right;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  overflow: hidden;
+  scrollbar-width: none;
+}
+
+.value-input::-webkit-scrollbar {
+  display: none;
+}
+
+.value-input--mono {
+  font-family: var(--font-mono);
+  font-size: var(--hex-font-size, 31px);
+  letter-spacing: -0.025em;
+}
+
+.value-input::placeholder {
+  color: var(--ink-3);
+}
+
+.value-input:focus {
+  background: color-mix(in srgb, var(--accent-soft) 24%, transparent);
+}
+
+.binary-grid {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.binary-row {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.bit-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.bit-btn {
+  min-width: 0;
+  height: 36px;
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  background: var(--surface-2);
+  display: grid;
+  place-items: center;
+  font: 500 22px/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  transition: transform 70ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.bit-btn:active {
+  transform: scale(0.92);
+}
+
+.bit-btn[data-value="1"] {
+  background: var(--surface);
+  border-color: var(--border-strong);
+}
+
+.bit-btn[data-value="0"] {
+  color: var(--ink-3);
+}
+
+.bit-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.bit-labels {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 3px;
+  margin-top: 3px;
+  font: 10px/1.2 var(--font-mono);
+  color: var(--ink-2);
+}
+
+.bit-label {
+  min-height: 12px;
+}
+
+.bit-label--end {
+  text-align: right;
+}
+
+.status {
+  margin: -2px 0 0;
+  min-height: 0;
+  color: var(--ink-3);
+  font-size: 12px;
+  text-align: center;
+}
+
+.status--error {
+  color: var(--bad);
+}
+
+.status--ok {
+  color: var(--ink-3);
+}
+
+.status:empty {
+  display: none;
+}
+
+@media (max-width: 390px) {
+  .number-shell {
+    padding-left: calc(var(--safe-left) + 10px);
+    padding-right: calc(var(--safe-right) + 10px);
+  }
+
+  .panel__label {
+    font-size: 18px;
+  }
+
+  .value-input {
+    padding-top: 28px;
+    padding-right: 18px;
+    padding-bottom: 14px;
+    padding-left: 18px;
+  }
+
+  .bit-btn {
+    height: 34px;
+    font-size: 20px;
+    border-radius: 4px;
+  }
+
+  .binary-row,
+  .bit-labels {
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+  }
+
+  .binary-row {
+    gap: 2px;
+  }
+
+  .bit-labels {
+    gap: 2px;
+  }
+}
+
+@media (min-height: 760px) {
+  .number-shell {
+    gap: 14px;
+  }
+
+  .panel--input {
+    min-height: 128px;
+  }
+
+  .bit-btn {
+    height: 40px;
+  }
+
+  .binary-grid {
+    gap: 14px;
+  }
+}
+
+.panel--binary .panel__head {
+  padding-left: 2px;
+  padding-right: 2px;
+}

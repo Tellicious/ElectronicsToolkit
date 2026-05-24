@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <script src="../../assets/app.js"></script>
+    <title>LED Resistor — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+        <section class="tool-card">
+            <h2 class="tool-card__title">LED Resistor</h2>
+            <div class="tool-row"><label><span class="tool-label">Supply voltage</span><input id="vs" class="tool-input"
+                        inputmode="decimal"></label><span class="tool-unit">V</span></div>
+            <div class="tool-row"><label><span class="tool-label">LED forward voltage</span><input id="vf"
+                        class="tool-input" inputmode="decimal"></label><span class="tool-unit">V</span></div>
+            <div class="tool-row"><label><span class="tool-label">Current</span><input id="ma" class="tool-input"
+                        inputmode="decimal"></label><span class="tool-unit">mA</span></div>
+            <div class="tool-row"><label><span class="tool-label">LEDs in series</span><input id="count"
+                        class="tool-input" inputmode="numeric"></label><span class="tool-unit">pcs</span>
+            </div>
+            <div class="tool-result">
+                <div id="ledValue" class="tool-result__value">—</div>
+                <div id="ledMeta" class="tool-result__meta"></div>
+            </div>
+        </section>
+    </main>
+    <script src="led-resistor.js"></script>
+</body>
+
+</html>
