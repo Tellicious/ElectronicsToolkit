@@ -1,17 +1,13 @@
 version: 2
 updates:
   # Keep the actions in our workflows up to date.
-  # This is the only ecosystem we need: the PWA has no npm/pip/etc. deps.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-    open-pull-requests-limit: 5
-    commit-message:
-      prefix: "ci"
-      include: "scope"
+        interval: "weekly"
+        day: "sunday"
+        time: "02:00"
+        timezone: "UTC"
     labels:
       - "dependencies"
       - "github-actions"
@@ -20,3 +16,6 @@ updates:
       actions:
         patterns:
           - "*"
+    assignees:
+      - "Tellicious"
+
