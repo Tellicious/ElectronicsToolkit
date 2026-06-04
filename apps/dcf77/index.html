@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="dcf77.css">
+    <script src="../../assets/app.js"></script>
+    <title>Time Signal — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+        <section class="tool-card">
+            <h2 class="tool-card__title">Radio Time Signal</h2>
+
+            <div class="dcf-readout">
+                <div id="encTime" class="dcf-readout__time">—</div>
+                <div id="encZone" class="dcf-readout__zone"></div>
+                <div id="encSecond" class="dcf-readout__second"></div>
+            </div>
+
+            <button id="playBtn" class="dcf-play" type="button">
+                <span class="dcf-play__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </span>
+                <span class="dcf-play__label">Play</span>
+            </button>
+
+            <div id="status" class="dcf-status"></div>
+
+            <div class="tool-row"><label><span class="tool-label">Station</span></label><select id="station"
+                    class="tool-select" aria-label="Station"></select></div>
+            <div class="tool-row"><label><span class="tool-label">Carrier</span></label><select id="carrier"
+                    class="tool-select" aria-label="Carrier frequency"></select></div>
+
+            <p class="tool-note">Emulates the long-wave time-code stations used by radio-controlled clocks, transmitting
+                the same time code each real station broadcasts: <strong>DCF77</strong> (Germany), <strong>WWVB</strong>
+                (USA), <strong>JJY-40 / JJY-60</strong> (Japan), <strong>MSF</strong> (UK) and <strong>BPC</strong>
+                (China). Each is sent in its own time zone.</p>
+            <p class="tool-note">The watch picks up a <strong>magnetic field</strong>, not sound: the speaker's voice
+                coil carries the audio current and acts as a tiny antenna. The station frequencies are above what the
+                phone can output directly, so the app plays a clean sine at a sub-multiple and lets the amplifier/coil's
+                harmonic land on the real carrier.</p>
+            <p class="tool-note"><strong>To sync:</strong> pick the station, turn the <strong>volume to maximum</strong>,
+                rest the watch's antenna against the phone speaker, and put the watch into manual-receive mode. Keep this
+                screen in the foreground — locking usually takes a few minutes. Wired earbuds resting on the watch often
+                work better than the speaker.</p>
+        </section>
+    </main>
+    <script src="dcf77.js"></script>
+</body>
+
+</html>

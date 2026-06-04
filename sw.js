@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'utilities-v8-no-camera';
+const VERSION = 'utilities-v15-timesig';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -37,6 +37,7 @@ const PRECACHE_ASSETS = [
   './apps/awg-converter/index.html',
   './apps/battery-life/index.html',
   './apps/capacitor/index.html',
+  './apps/dcf77/index.html',
   './apps/led-resistor/index.html',
   './apps/number-converter/index.html',
   './apps/op-amp-gain/index.html',
@@ -50,6 +51,8 @@ const PRECACHE_ASSETS = [
   './apps/awg-converter/awg-converter.js',
   './apps/battery-life/battery-life.js',
   './apps/capacitor/capacitor.js',
+  './apps/dcf77/dcf77.js',
+  './apps/dcf77/dcf77-worklet.js',
   './apps/led-resistor/led-resistor.js',
   './apps/number-converter/number-converter.js',
   './apps/op-amp-gain/op-amp-gain.js',
@@ -61,6 +64,7 @@ const PRECACHE_ASSETS = [
   // Sub-apps — styles
   './apps/number-converter/number-converter.css',
   './apps/resistor/resistor.css',
+  './apps/dcf77/dcf77.css',
 ];
 
 self.addEventListener('install', (event) => {
