@@ -40,7 +40,7 @@
   const segHighFirst = (highMs, lowA) => [{ d: highMs, a: 1 }, { d: 1000 - highMs, a: lowA }];
 
   // ===== Station encoders (each returns 60 second-programs) ================
-  // DCF77 — Germany, 77.5 kHz, CET/CEST, encodes the upcoming minute.
+  // time-signal — Germany, 77.5 kHz, CET/CEST, encodes the upcoming minute.
   function dcf77Program(anchor) {
     const p = zoneParts(anchor, 'Europe/Berlin'), dst = p.offset === 120;
     const b = new Array(60).fill(0);
@@ -200,7 +200,7 @@
       startMediaUnlock();
       const AC = window.AudioContext || window.webkitAudioContext;
       ctx = new AC({ sampleRate: 48000, latencyHint: 'playback' });
-      await ctx.audioWorklet.addModule('dcf77-worklet.js');
+      await ctx.audioWorklet.addModule('time-signal-worklet.js');
       await ctx.resume();
 
       node = new AudioWorkletNode(ctx, 'timesig-processor', { outputChannelCount: [2] });

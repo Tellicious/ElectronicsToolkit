@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#f2f2f7">
     <link rel="manifest" href="../../manifest.json">
     <link rel="stylesheet" href="../../assets/styles.css">
-    <link rel="stylesheet" href="dcf77.css">
+    <link rel="stylesheet" href="time-signal.css">
     <script src="../../assets/app.js"></script>
     <title>Time Signal — Electronics Toolkit</title>
 </head>
@@ -48,18 +48,19 @@
             <p class="tool-note">Emulates the long-wave time-code stations used by radio-controlled clocks, transmitting
                 the same time code each real station broadcasts: <strong>DCF77</strong> (Germany), <strong>WWVB</strong>
                 (USA), <strong>JJY-40 / JJY-60</strong> (Japan), <strong>MSF</strong> (UK) and <strong>BPC</strong>
-                (China). Each is sent in its own time zone.</p>
+                (China). Each is sent in its own time zone.
+            </p>
             <p class="tool-note">The watch picks up a <strong>magnetic field</strong>, not sound: the speaker's voice
                 coil carries the audio current and acts as a tiny antenna. The station frequencies are above what the
                 phone can output directly, so the app plays a clean sine at a sub-multiple and lets the amplifier/coil's
                 harmonic land on the real carrier.</p>
-            <p class="tool-note"><strong>To sync:</strong> pick the station, turn the <strong>volume to maximum</strong>,
-                rest the watch's antenna against the phone speaker, and put the watch into manual-receive mode. Keep this
-                screen in the foreground — locking usually takes a few minutes. Wired earbuds resting on the watch often
-                work better than the speaker.</p>
+            <p class="tool-note"><strong>To sync:</strong> pick the station, turn the <strong>volume to
+                    maximum</strong>, rest the watch's antenna against the phone speaker, and put the watch into
+                manual-receive mode. Keep this screen in the foreground — locking usually takes a few minutes. Wired
+                earbuds resting on the watch often work better than the speaker.</p>
         </section>
     </main>
-    <script src="dcf77.js"></script>
+    <script src="time-signal.js"></script>
 </body>
 
 </html>

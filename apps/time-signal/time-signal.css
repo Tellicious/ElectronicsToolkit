@@ -1,4 +1,4 @@
-/* DCF77 generator — app-specific styles (uses shared design tokens). */
+/* time-signal generator — app-specific styles (uses shared design tokens). */
 
 .dcf-readout {
   display: grid;
@@ -69,7 +69,7 @@
   margin-top: 14px;
 }
 
-.tool-row > label {
+.tool-row>label {
   display: block;
 }
 

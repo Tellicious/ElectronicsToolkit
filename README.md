@@ -33,49 +33,54 @@ Behavior on iOS:
 ## Project layout
 
 ```
-index.html                      # Hub / app launcher (links to each sub-app)
-manifest.json                   # PWA manifest (name, icons, display)
-sw.js                           # Service worker (precache shell, runtime caching)
+index.html                          # Hub / app launcher (links to each sub-app)
+manifest.json                       # PWA manifest (name, icons, display)
+sw.js                               # Service worker (precache shell, runtime caching)
 assets/
-    ├─ app.js                   # Shared helpers, settings, and SW registration
-    ├─ icons/                   # App and Apple-touch icons (multiple sizes)
-    └─ styles.css               # Global tokens, variables, and hub styles
+    ├─ app.js                       # Shared helpers, settings, and SW registration
+    ├─ icons/                       # App and Apple-touch icons (multiple sizes)
+    └─ styles.css                   # Global tokens, variables, and hub styles
 apps/
-    ├─ awg-converter/           # AWG ↔ mm wire gauge converter
-    │  ├─ index.html            # AWG converter UI
-    │  └─ awg-converter.js      # Conversion logic and helpers
-    ├─ battery-life/            # Battery life / runtime estimator
-    │  ├─ index.html            # Battery estimator UI
-    │  └─ battery-life.js       # Calculation logic for runtime estimates
-    ├─ capacitor/               # Capacitor unit conversions / reactance
-    │  ├─ index.html            # Capacitor tool UI
-    │  └─ capacitor.js          # Unit conversions and reactance formulas
-    ├─ led-resistor/            # LED resistor value helper
-    │  ├─ index.html            # LED helper UI
-    │  └─ led-resistor.js       # Compute resistor from Vf and desired current
-    ├─ number-converter/        # Number/base and unit converter
-    │  ├─ index.html            # Converter UI
-    │  ├─ number-converter.css  # Converter styles
-    │  └─ number-converter.js   # Parsing and conversion logic
-    ├─ op-amp-gain/             # Op-amp gain / configuration helper
-    │  ├─ index.html            # Op-amp configuration UI
-    │  └─ op-amp-gain.js        # Gain calculations and resistor suggestions
-    ├─ resistor/                # Resistor colour-code decoder
-    │  ├─ index.html            # Resistor picker + camera UI
-    │  ├─ resistor.css          # Resistor sub-app styles
-    │  ├─ resistor.js           # Picker, SVG render, value engine
-    │  ├─ cv.js                 # Pure-JS computer-vision pipeline
-    │  └─ camera.js             # Capture flow and result UI
-    ├─ series-parallel/         # Series / parallel resistor combos
-    │  ├─ index.html            # Series/parallel UI
-    │  └─ series-parallel.js    # Equivalent resistance calculations
-    ├─ settings/                # App-wide settings and preferences
-    │  └─ index.html            # Settings UI (toggle defaults, units)
-    ├─ smd-resistor/            # SMD resistor code lookup
-    │  ├─ index.html            # SMD lookup UI
-    │  └─ smd-resistor.js       # Decode SMD markings to values
-    └─ voltage-divider/         # Voltage divider calculator
-        ├─ index.html           # Voltage divider UI
-        └─ voltage-divider.js   # Output voltage and resistor suggestions
+    ├─ awg-converter/               # AWG ↔ mm wire gauge converter
+    │  ├─ index.html                # AWG converter UI
+    │  └─ awg-converter.js          # Conversion logic and helpers
+    ├─ battery-life/                # Battery life / runtime estimator
+    │  ├─ index.html                # Battery estimator UI
+    │  └─ battery-life.js           # Calculation logic for runtime estimates
+    ├─ capacitor/                   # Capacitor unit conversions / reactance
+    │  ├─ index.html                # Capacitor tool UI
+    │  └─ capacitor.js              # Unit conversions and reactance formulas
+    ├─ led-resistor/                # LED resistor value helper
+    │  ├─ index.html                # LED helper UI
+    │  └─ led-resistor.js           # Compute resistor from Vf and desired current
+    ├─ number-converter/            # Number/base and unit converter
+    │  ├─ index.html                # Converter UI
+    │  ├─ number-converter.css      # Converter styles
+    │  └─ number-converter.js       # Parsing and conversion logic
+    ├─ op-amp-gain/                 # Op-amp gain / configuration helper
+    │  ├─ index.html                # Op-amp configuration UI
+    │  └─ op-amp-gain.js            # Gain calculations and resistor suggestions
+    ├─ resistor/                    # Resistor colour-code decoder
+    │  ├─ index.html                # Resistor picker + camera UI
+    │  ├─ resistor.css              # Resistor sub-app styles
+    │  ├─ resistor.js               # Picker, SVG render, value engine
+    │  ├─ cv.js                     # Pure-JS computer-vision pipeline
+    │  └─ camera.js                 # Capture flow and result UI
+    ├─ series-parallel/             # Series / parallel resistor combos
+    │  ├─ index.html                # Series/parallel UI
+    │  └─ series-parallel.js        # Equivalent resistance calculations
+    ├─ settings/                    # App-wide settings and preferences
+    │  └─ index.html                # Settings UI (toggle defaults, units)
+    ├─ smd-resistor/                # SMD resistor code lookup
+    │  ├─ index.html                # SMD lookup UI
+    │  └─ smd-resistor.js           # Decode SMD markings to values
+    ├─ time-signal/                 # Time-signal generator app for radio-controlled watch synchronization
+    │  ├─ index.html                # Time-signal generator UI
+    │  ├─ time-signal.js            # Time-signal wave calculation
+    │  ├─ time-signal-worklet.js    # Audio output worklet
+    │  └─ time-signal.css           # Time-signal specific formatting
+    └─ voltage-divider/             # Voltage divider calculator
+        ├─ index.html               # Voltage divider UI
+        └─ voltage-divider.js       # Output voltage and resistor suggestions
 ```
 
