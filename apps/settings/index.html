@@ -9,6 +9,40 @@
     <link rel="manifest" href="../../manifest.json">
     <link rel="stylesheet" href="../../assets/styles.css">
     <script src="../../assets/app.js"></script>
+    <style>
+        .settings-item--stack {
+            display: block;
+        }
+
+        .settings-item--stack .pill-seg {
+            margin-top: 10px;
+        }
+
+        .pill-seg--3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .set-rowline {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .set-val {
+            color: var(--ink-2);
+            font-weight: 600;
+            font-size: 17px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .set-range {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            accent-color: var(--accent);
+        }
+    </style>
     <title>Settings — Electronics Toolkit</title>
 </head>
 
@@ -24,19 +58,62 @@
         <section class="tool-card">
             <h2 class="tool-card__title">Appearance</h2>
             <div class="settings-list">
-                <div class="settings-item">
-                    <div><strong>Theme</strong><span>Follow system, light, or dark.</span></div><select id="themeSelect"
-                        class="tool-select" style="max-width:160px">
-                        <option value="auto">Auto</option>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
+                <div class="settings-item settings-item--stack">
+                    <strong>Theme</strong><span>Follow system, light, or dark.</span>
+                    <div class="pill-seg pill-seg--3" id="segTheme" role="group" aria-label="Theme">
+                        <button class="seg__btn" type="button" data-value="auto">Auto</button>
+                        <button class="seg__btn" type="button" data-value="light">Light</button>
+                        <button class="seg__btn" type="button" data-value="dark">Dark</button>
+                    </div>
                 </div>
             </div>
-            <p class="tool-note">More global options can be added here without changing the individual utilities.</p>
+        </section>
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">GPS</h2>
+            <div class="settings-list">
+                <div class="settings-item settings-item--stack">
+                    <strong>Coordinate format</strong><span>Decimal degrees or degrees / minutes / seconds.</span>
+                    <div class="pill-seg" id="segCoord" role="group" aria-label="Coordinate format">
+                        <button class="seg__btn" type="button" data-value="dec">Decimal</button>
+                        <button class="seg__btn" type="button" data-value="dms">DMS</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <strong>Speed unit</strong><span>Used for speed readouts and the speed chart.</span>
+                    <div class="pill-seg" id="segSpeed" role="group" aria-label="Speed unit">
+                        <button class="seg__btn" type="button" data-value="mps">m/s</button>
+                        <button class="seg__btn" type="button" data-value="kmh">km/h</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Movement threshold</strong><span class="set-val"
+                            id="gpsThrVal"></span></div>
+                    <span>Speeds below this count as stationary.</span>
+                    <input id="gpsThr" class="set-range" type="range" min="0" max="5" step="0.1">
+                </div>
+            </div>
         </section>
     </main>
-    <script>const s = document.getElementById('themeSelect'); s.value = window.UtilitiesSettings.theme; s.addEventListener('change', () => { window.UtilitiesSettings.theme = s.value });</script>
+    <script>
+        function pills(id, get, set) {
+            const g = document.getElementById(id), bs = [...g.querySelectorAll('.seg__btn')];
+            const paint = v => bs.forEach(b => b.classList.toggle('seg__btn--active', b.dataset.value === v));
+            bs.forEach(b => b.addEventListener('click', () => { set(b.dataset.value); paint(b.dataset.value); }));
+            paint(get());
+        }
+        pills('segTheme', () => window.UtilitiesSettings.theme, v => { window.UtilitiesSettings.theme = v; });
+        pills('segCoord', () => localStorage.getItem('gps.coordFormat') || 'dec', v => localStorage.setItem('gps.coordFormat', v));
+        pills('segSpeed', () => localStorage.getItem('gps.speedUnit') || 'mps', v => { localStorage.setItem('gps.speedUnit', v); paintThr(); });
+        const th = document.getElementById('gpsThr');
+        th.value = parseFloat(localStorage.getItem('gps.threshold')) || 0.5;
+        function paintThr() {
+            const v = parseFloat(th.value), u = localStorage.getItem('gps.speedUnit') || 'mps';
+            document.getElementById('gpsThrVal').textContent = u === 'kmh' ? (v * 3.6).toFixed(1) + ' km/h' : v.toFixed(1) + ' m/s';
+        }
+        th.addEventListener('input', () => { localStorage.setItem('gps.threshold', th.value); paintThr(); });
+        paintThr();
+    </script>
 </body>
 
 </html>

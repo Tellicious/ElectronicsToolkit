@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="../../assets/sensorkit/sensorkit.css">
+    <link rel="stylesheet" href="../../assets/vendor/leaflet/leaflet.css">
+    <script src="../../assets/app.js"></script>
+    <title>GPS — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">GPS</h2>
+            <div class="sk-readout">
+                <div class="sk-readout__row"><span class="sk-readout__label">Latitude</span><span id="lat"
+                        class="sk-readout__value">—</span></div>
+                <div class="sk-readout__row"><span class="sk-readout__label">Longitude</span><span id="lon"
+                        class="sk-readout__value">—</span></div>
+                <div class="sk-readout__row"><span class="sk-readout__label">Altitude</span><span id="alt"
+                        class="sk-readout__value">—</span></div>
+                <div class="sk-readout__row"><span class="sk-readout__label">H. accuracy</span><span id="hacc"
+                        class="sk-readout__value">—</span></div>
+                <div class="sk-readout__row"><span class="sk-readout__label">V. accuracy</span><span id="vacc"
+                        class="sk-readout__value">—</span></div>
+            </div>
+            <div id="status" class="sk-status">Acquiring GPS…</div>
+        </section>
+
+        <section class="tool-card">
+            <div id="kpis"></div>
+            <div class="sk-toggle-row">
+                <span class="sk-toggle-row__label" style="margin-bottom:0">CSV logging</span>
+                <label class="sk-switch"><input type="checkbox" id="logToggle"><span
+                        class="sk-switch__track"></span></label>
+            </div>
+            <div id="controls"></div>
+        </section>
+
+        <section class="tool-card">
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Track</span>
+                    <span class="sk-panel__actions">
+                        <button class="sk-fs-btn" id="mapCenter" type="button" aria-label="Center on position"><svg
+                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="7" />
+                                <path d="M12 1v3M12 20v3M1 12h3M20 12h3" />
+                            </svg></button>
+                        <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16"
+                                height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                            </svg></button>
+                    </span>
+                </div>
+                <div class="sk-frame sk-frame--map" id="map"></div>
+            </div>
+        </section>
+
+        <section class="tool-card">
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Speed</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartSpeed"></div>
+            </div>
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Altitude</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartAlt"></div>
+            </div>
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Heading</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartHdg"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../../assets/vendor/leaflet/leaflet.js"></script>
+    <script src="../../assets/sensorkit/format.js"></script>
+    <script src="../../assets/sensorkit/csv.js"></script>
+    <script src="../../assets/sensorkit/kpi.js"></script>
+    <script src="../../assets/sensorkit/controls.js"></script>
+    <script src="../../assets/sensorkit/chart.js"></script>
+    <script src="gps.js"></script>
+</body>
+
+</html>

@@ -432,7 +432,7 @@ button {
 .tool-label {
   display: block;
   color: var(--ink-2);
-  font-size: 12px;
+  font-size: 16px;
   margin-bottom: 6px;
 }
 
@@ -444,7 +444,7 @@ button {
   background: var(--surface-2);
   color: var(--ink);
   padding: 12px 13px;
-  font: 600 19px/1.1 var(--font-sans);
+  font: 600 16px/1.1 var(--font-sans);
   outline: none;
 }
 
@@ -507,7 +507,7 @@ button {
 
 .settings-item span {
   color: var(--ink-3);
-  font-size: 13px;
+  /*font-size: 13px;*/
 }
 
 
@@ -646,4 +646,40 @@ button {
 
 .tool-row-group .tool-row {
   flex: 1;
+}
+
+/* Stacked settings rows (shared by the Settings page and sensor apps) */
+.settings-item--stack {
+  display: block;
+}
+
+.settings-item--stack>.pill-seg,
+.settings-item--stack>.set-range,
+.settings-item--stack>.tool-select {
+  margin-top: 10px;
+}
+
+.settings-item--stack .tool-select {
+  width: 100%;
+  max-width: none;
+}
+
+.set-range {
+  display: block;
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.set-rowline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.set-val {
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
 }

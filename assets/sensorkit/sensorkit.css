@@ -1,0 +1,287 @@
+/* SensorKit — shared UI styles for the sensor apps (uses toolkit tokens). */
+
+/* ---- KPI tiles -------------------------------------------------------- */
+.sk-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.sk-kpi {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+}
+
+.sk-kpi__label {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.sk-kpi__value {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-weight: 650;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Control bar ------------------------------------------------------ */
+.sk-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.sk-btn {
+  padding: 12px;
+  border-radius: var(--r-md);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.sk-btn:active {
+  transform: scale(0.99);
+}
+
+.sk-btn--primary {
+  grid-column: 1 / -1;
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.sk-btn--stop {
+  background: var(--bad, #ff3b30);
+  color: #fff;
+  border-color: transparent;
+}
+
+.sk-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---- iOS-style on/off toggle ----------------------------------------- */
+.sk-switch {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 31px;
+  flex: none;
+}
+
+.sk-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sk-switch__track {
+  position: absolute;
+  inset: 0;
+  background: var(--switch-off, #e9e9ea);
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.sk-switch__track::before {
+  content: '';
+  position: absolute;
+  height: 27px;
+  width: 27px;
+  left: 2px;
+  top: 2px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.sk-switch input:checked + .sk-switch__track {
+  background: #34c759;
+}
+
+.sk-switch input:checked + .sk-switch__track::before {
+  transform: translateX(20px);
+}
+
+.sk-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* Three-option segmented pill on a single row. */
+.pill-seg--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ---- Panels (chart / map) + fullscreen -------------------------------- */
+.sk-panel {
+  margin-top: 14px;
+}
+
+.sk-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sk-panel__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.sk-panel__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.sk-fs-btn {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.sk-frame {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.sk-frame--map {
+  height: 240px;
+}
+
+.sk-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+/* Fullscreen overlay: a panel promoted to fill the viewport (works in any
+   orientation; on iOS PWA the real Fullscreen API isn't available for
+   arbitrary elements, so we use a fixed overlay instead). */
+.sk-panel--fs {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  margin: 0;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top) + 8px) calc(env(safe-area-inset-right) + 8px) calc(env(safe-area-inset-bottom) + 8px) calc(env(safe-area-inset-left) + 8px);
+}
+
+.sk-panel--fs .sk-frame {
+  flex: 1;
+  height: auto;
+  border-radius: var(--r-md);
+}
+
+/* ---- Shared readouts (used by every sensor app) ---------------------- */
+
+/* Large primary value (e.g. sound level). */
+.sk-bignum {
+  text-align: center;
+  padding: 8px 0 2px;
+}
+
+.sk-bignum__val {
+  font-family: var(--font-mono);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sk-bignum__unit {
+  font-size: 20px;
+  color: var(--ink-2);
+  margin-left: 4px;
+}
+
+.sk-bignum__sub {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+
+/* Label / value rows in a grouped readout. */
+.sk-readout {
+  display: grid;
+  margin: 4px 0;
+}
+
+.sk-readout__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hair, rgba(120, 120, 128, 0.2));
+}
+
+.sk-readout__row:last-child {
+  border-bottom: none;
+}
+
+.sk-readout__label {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.sk-readout__value {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Centered status line. */
+.sk-status {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+  min-height: 1.2em;
+}
+
+/* Label on a toggle row. */
+.sk-toggle-row__label {
+  font-size: 16px;
+  color: var(--ink);
+}

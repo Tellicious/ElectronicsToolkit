@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="../../assets/sensorkit/sensorkit.css">
+    <script src="../../assets/app.js"></script>
+    <title>Sound Level — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">Sound Level</h2>
+            <div class="sk-bignum"><span id="levelVal" class="sk-bignum__val">—</span><span
+                    class="sk-bignum__unit">dB</span></div>
+            <div id="levelSub" class="sk-bignum__sub"></div>
+            <div class="sk-readout">
+                <div class="sk-readout__row"><span class="sk-readout__label">Dominant frequency</span><span id="domFreq"
+                        class="sk-readout__value">— Hz</span></div>
+            </div>
+            <div id="status" class="sk-status">Tap Start to begin (microphone permission required).</div>
+        </section>
+
+        <section class="tool-card">
+            <div id="kpis"></div>
+            <div class="sk-toggle-row">
+                <span class="sk-toggle-row__label">CSV logging</span>
+                <label class="sk-switch"><input type="checkbox" id="logToggle"><span
+                        class="sk-switch__track"></span></label>
+            </div>
+            <div id="controls"></div>
+        </section>
+
+        <section class="tool-card">
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Time domain</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartScope"></div>
+            </div>
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Frequency domain</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartSpec"></div>
+            </div>
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Level history</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartLevel"></div>
+            </div>
+        </section>
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">Measurement</h2>
+            <div class="settings-list">
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Frequency weighting</strong></div>
+                    <div class="pill-seg pill-seg--3" id="segWeight" role="group" aria-label="Weighting">
+                        <button class="seg__btn" type="button" data-value="z">Z</button>
+                        <button class="seg__btn" type="button" data-value="a">A</button>
+                        <button class="seg__btn" type="button" data-value="c">C</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Time weighting</strong></div>
+                    <div class="pill-seg pill-seg--3" id="segTime" role="group" aria-label="Time weighting">
+                        <button class="seg__btn" type="button" data-value="fast">Fast</button>
+                        <button class="seg__btn" type="button" data-value="slow">Slow</button>
+                        <button class="seg__btn" type="button" data-value="impulse">Impulse</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Calibration offset</strong><span class="set-val"
+                            id="calVal"></span></div>
+                    <input id="calInput" class="set-range" type="range" min="0" max="150" step="1">
+                </div>
+            </div>
+        </section>
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">FFT</h2>
+            <div class="settings-list">
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Window function</strong></div>
+                    <select id="selWindow" class="tool-select"></select>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Window length (samples)</strong></div>
+                    <select id="selSize" class="tool-select"></select>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Sampling rate</strong></div>
+                    <select id="selRate" class="tool-select"></select>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Coupling</strong></div>
+                    <div class="pill-seg" id="segCouple" role="group" aria-label="Coupling">
+                        <button class="seg__btn" type="button" data-value="ac">AC</button>
+                        <button class="seg__btn" type="button" data-value="dc">DC</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Dominant frequencies</strong><span class="set-val"
+                            id="peaksVal"></span></div>
+                    <input id="selPeaks" class="set-range" type="range" min="1" max="5" step="1">
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Dominant freq. smoothing</strong></div>
+                    <select id="selSmooth" class="tool-select"></select>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../assets/sensorkit/format.js"></script>
+    <script src="../../assets/sensorkit/csv.js"></script>
+    <script src="../../assets/sensorkit/kpi.js"></script>
+    <script src="../../assets/sensorkit/controls.js"></script>
+    <script src="../../assets/sensorkit/chart.js"></script>
+    <script src="../../assets/sensorkit/liveplot.js"></script>
+    <script src="../../assets/sensorkit/fft.js"></script>
+    <script src="mic.js"></script>
+</body>
+
+</html>

@@ -39,7 +39,18 @@ sw.js                               # Service worker (precache shell, runtime ca
 assets/
     ├─ app.js                       # Shared helpers, settings, and SW registration
     ├─ icons/                       # App and Apple-touch icons (multiple sizes)
-    └─ styles.css                   # Global tokens, variables, and hub styles
+    ├─ styles.css                   # Global tokens, variables, and hub styles
+    ├─ sensorkit/                   # Shared charting, DSP, and UI components
+    │  ├─ chart.js                  # Time-series chart with pan/zoom
+    │  ├─ controls.js               # Play/stop/reset control bar component
+    │  ├─ csv.js                    # CSV logger for data export
+    │  ├─ fft.js                    # FFT with windowing and frequency weighting
+    │  ├─ format.js                 # Formatting helpers (duration, numbers)
+    │  ├─ kpi.js                    # Key performance indicator grid display
+    │  ├─ liveplot.js               # Real-time waveform and spectrum plotter
+    │  └─ sensorkit.css             # Shared chart and control styles
+    └─ vendor/
+        └─ leaflet/                 # Leaflet mapping library (for GPS)
 apps/
     ├─ awg-converter/               # AWG ↔ mm wire gauge converter
     │  ├─ index.html                # AWG converter UI
@@ -50,6 +61,10 @@ apps/
     ├─ capacitor/                   # Capacitor unit conversions / reactance
     │  ├─ index.html                # Capacitor tool UI
     │  └─ capacitor.js              # Unit conversions and reactance formulas
+    ├─ gps/                         # GPS data logger and navigator
+    │  ├─ index.html                # GPS UI
+    │  ├─ gps.css                   # GPS-specific styles
+    │  └─ gps.js                    # Location tracking, speed, altitude, heading
     ├─ led-resistor/                # LED resistor value helper
     │  ├─ index.html                # LED helper UI
     │  └─ led-resistor.js           # Compute resistor from Vf and desired current
@@ -57,6 +72,10 @@ apps/
     │  ├─ index.html                # Converter UI
     │  ├─ number-converter.css      # Converter styles
     │  └─ number-converter.js       # Parsing and conversion logic
+    ├─ mic/                         # Sound level meter and spectrum analyzer
+    │  ├─ index.html                # Microphone meter UI
+    │  ├─ mic.css                   # Mic-specific styles
+    │  └─ mic.js                    # Audio capture, FFT, weighting, logging
     ├─ op-amp-gain/                 # Op-amp gain / configuration helper
     │  ├─ index.html                # Op-amp configuration UI
     │  └─ op-amp-gain.js            # Gain calculations and resistor suggestions

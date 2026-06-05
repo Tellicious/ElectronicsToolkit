@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'utilities-v15-timesig';
+const VERSION = 'utilities-v30-mic';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -29,6 +29,21 @@ const PRECACHE_ASSETS = [
   // Shared assets
   './assets/styles.css',
   './assets/app.js',
+  './assets/sensorkit/format.js',
+  './assets/sensorkit/csv.js',
+  './assets/sensorkit/kpi.js',
+  './assets/sensorkit/controls.js',
+  './assets/sensorkit/chart.js',
+  './assets/sensorkit/liveplot.js',
+  './assets/sensorkit/fft.js',
+  './assets/sensorkit/sensorkit.css',
+  './assets/vendor/leaflet/leaflet.js',
+  './assets/vendor/leaflet/leaflet.css',
+  './assets/vendor/leaflet/images/marker-icon.png',
+  './assets/vendor/leaflet/images/marker-icon-2x.png',
+  './assets/vendor/leaflet/images/marker-shadow.png',
+  './assets/vendor/leaflet/images/layers.png',
+  './assets/vendor/leaflet/images/layers-2x.png',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/icon-maskable-512.png',
@@ -38,6 +53,8 @@ const PRECACHE_ASSETS = [
   './apps/battery-life/index.html',
   './apps/capacitor/index.html',
   './apps/time-signal/index.html',
+  './apps/gps/index.html',
+  './apps/mic/index.html',
   './apps/led-resistor/index.html',
   './apps/number-converter/index.html',
   './apps/op-amp-gain/index.html',
@@ -53,6 +70,8 @@ const PRECACHE_ASSETS = [
   './apps/capacitor/capacitor.js',
   './apps/time-signal/time-signal.js',
   './apps/time-signal/time-signal-worklet.js',
+  './apps/gps/gps.js',
+  './apps/mic/mic.js',
   './apps/led-resistor/led-resistor.js',
   './apps/number-converter/number-converter.js',
   './apps/op-amp-gain/op-amp-gain.js',

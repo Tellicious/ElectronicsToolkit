@@ -40,7 +40,7 @@
   const segHighFirst = (highMs, lowA) => [{ d: highMs, a: 1 }, { d: 1000 - highMs, a: lowA }];
 
   // ===== Station encoders (each returns 60 second-programs) ================
-  // time-signal — Germany, 77.5 kHz, CET/CEST, encodes the upcoming minute.
+  // DCF77 — Germany, 77.5 kHz, CET/CEST, encodes the upcoming minute.
   function dcf77Program(anchor) {
     const p = zoneParts(anchor, 'Europe/Berlin'), dst = p.offset === 120;
     const b = new Array(60).fill(0);
@@ -153,7 +153,7 @@
   let station = STATIONS.dcf77;
 
   // ===== Audio engine =====================================================
-  let ctx = null, node = null, wakeLock = null;
+  let ctx = null, node = null;
   let media = null, running = false, lastPlayMinute = 0, uiTimer = null;
 
   // A silent loop claims the media playback session (needed alongside transmit).
@@ -176,14 +176,6 @@
     } catch (_) { }
   }
   function stopMediaUnlock() { try { if (media) media.pause(); } catch (_) { } }
-
-  async function requestWakeLock() {
-    try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (_) { }
-  }
-  function releaseWakeLock() { try { if (wakeLock) { wakeLock.release(); wakeLock = null; } } catch (_) { } }
-  document.addEventListener('visibilitychange', () => {
-    if (running && document.visibilityState === 'visible' && !wakeLock) requestWakeLock();
-  });
 
   function selCarrier() { return +document.getElementById('carrier').value; }
 
@@ -217,7 +209,7 @@
       enqueueNext();
 
       running = true;
-      await requestWakeLock();
+      await U.wakeLock.acquire();
       setPlaying(true);
       uiTimer = setInterval(updateReadout, 250); updateReadout();
       status.textContent = `Transmitting · ${ctx.sampleRate} Hz`;
@@ -234,7 +226,7 @@
     stopMediaUnlock();
     try { if (ctx) ctx.close(); } catch (_) { }
     ctx = null; node = null;
-    releaseWakeLock();
+    U.wakeLock.release();
     setPlaying(false);
     document.getElementById('status').textContent = 'Stopped.';
   }

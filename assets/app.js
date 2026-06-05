@@ -281,6 +281,30 @@
     return elements;
   }
 
+  // --- Screen wake lock (shared) -----------------------------------------
+  // Keeps the screen awake while a long-running task is active (the
+  // time-signal transmitter, a sensor recording, etc.). Self-manages
+  // re-acquisition after the page is hidden/shown, so callers only need
+  // acquire() when starting and release() when done.
+  const wakeLock = (() => {
+    let lock = null, want = false;
+    async function tryAcquire() {
+      if (!want || lock || !('wakeLock' in navigator)) return;
+      try {
+        lock = await navigator.wakeLock.request('screen');
+        lock.addEventListener('release', () => { lock = null; });
+      } catch (_) { /* denied or unsupported — non-fatal */ }
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') tryAcquire();
+    });
+    return {
+      async acquire() { want = true; await tryAcquire(); },
+      release() { want = false; try { if (lock) lock.release(); } catch (_) { } lock = null; },
+      get active() { return !!lock; },
+    };
+  })();
+
   window.Utilities = Object.assign(window.Utilities || {}, {
     parseNumber,
     normalizeNumber,
@@ -301,6 +325,7 @@
     svgEl,
     svg,
     Shapes,
+    wakeLock,
   });
 
   window.UtilitiesSettings = {
