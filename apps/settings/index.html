@@ -42,6 +42,36 @@
             margin-top: 12px;
             accent-color: var(--accent);
         }
+
+        .storage-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .storage-btn {
+            padding: 12px;
+            border-radius: var(--r-md);
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--accent);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .storage-btn:active {
+            transform: scale(0.99);
+        }
+
+        .storage-btn:disabled {
+            opacity: 0.5;
+        }
+
+        .storage-btn--danger {
+            color: var(--bad);
+        }
     </style>
     <title>Settings — Electronics Toolkit</title>
 </head>
@@ -94,6 +124,22 @@
                 </div>
             </div>
         </section>
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">Storage</h2>
+            <div class="settings-list">
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Offline cache</strong><span class="set-val"
+                            id="cacheSize">…</span></div>
+                    <span>Pages, scripts and assets saved on this device so the app works offline.</span>
+                </div>
+            </div>
+            <div class="storage-actions">
+                <button class="storage-btn" id="recacheBtn" type="button">Re-download</button>
+                <button class="storage-btn storage-btn--danger" id="clearBtn" type="button">Clear cache</button>
+            </div>
+            <p id="storageStatus" class="tool-note" aria-live="polite"></p>
+        </section>
     </main>
     <script>
         function pills(id, get, set) {
@@ -113,6 +159,100 @@
         }
         th.addEventListener('input', () => { localStorage.setItem('gps.threshold', th.value); paintThr(); });
         paintThr();
+
+        // --- Storage / offline cache -----------------------------------
+        (function () {
+            const sizeEl = document.getElementById('cacheSize');
+            const statusEl = document.getElementById('storageStatus');
+            const recacheBtn = document.getElementById('recacheBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const hasCaches = 'caches' in window;
+
+            function fmtBytes(n) {
+                if (!Number.isFinite(n)) return '—';
+                if (n < 1024) return n + ' B';
+                const units = ['KB', 'MB', 'GB'];
+                let v = n / 1024, i = 0;
+                while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
+                return (v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2)) + ' ' + units[i];
+            }
+
+            // Sum the bytes of every stored response across all caches.
+            async function measure() {
+                let total = 0;
+                for (const name of await caches.keys()) {
+                    const cache = await caches.open(name);
+                    for (const req of await cache.keys()) {
+                        const res = await cache.match(req);
+                        if (!res) continue;
+                        try { total += (await res.blob()).size; } catch (_) { }
+                    }
+                }
+                return total;
+            }
+
+            async function refreshSize() {
+                if (!hasCaches) { sizeEl.textContent = 'N/A'; return; }
+                sizeEl.textContent = '…';
+                try { sizeEl.textContent = fmtBytes(await measure()); }
+                catch (_) { sizeEl.textContent = '—'; }
+            }
+
+            function busy(on) { recacheBtn.disabled = on; clearBtn.disabled = on; }
+
+            // Ask the controlling service worker to re-fetch and re-store the
+            // whole app; it replies on the port we hand it.
+            function recacheViaSW() {
+                return new Promise((resolve, reject) => {
+                    const sw = navigator.serviceWorker && navigator.serviceWorker.controller;
+                    if (!sw) { reject(new Error('no-controller')); return; }
+                    const ch = new MessageChannel();
+                    const timer = setTimeout(() => reject(new Error('timeout')), 90000);
+                    ch.port1.onmessage = (e) => { clearTimeout(timer); resolve(e.data || {}); };
+                    sw.postMessage({ type: 'RECACHE' }, [ch.port2]);
+                });
+            }
+
+            clearBtn.addEventListener('click', async () => {
+                if (!hasCaches) return;
+                busy(true);
+                statusEl.textContent = 'Clearing…';
+                try {
+                    await Promise.all((await caches.keys()).map(n => caches.delete(n)));
+                    await refreshSize();
+                    statusEl.textContent = 'Cache cleared — settings kept. The app re-caches itself as you use it online.';
+                } catch (_) {
+                    statusEl.textContent = 'Could not clear the cache.';
+                } finally {
+                    busy(false);
+                }
+            });
+
+            recacheBtn.addEventListener('click', async () => {
+                busy(true);
+                statusEl.textContent = 'Re-downloading…';
+                try {
+                    const res = await recacheViaSW();
+                    await refreshSize();
+                    if (res.ok === false) {
+                        statusEl.textContent = 'Re-download failed: ' + (res.error || 'unknown error') + '.';
+                    } else {
+                        const failed = res.failed || 0;
+                        statusEl.textContent = failed
+                            ? `Re-downloaded ${res.cached}/${res.total} files — ${failed} unavailable. Settings kept.`
+                            : `Re-downloaded ${res.cached} files. Settings kept.`;
+                    }
+                } catch (err) {
+                    statusEl.textContent = navigator.onLine
+                        ? 'Re-download needs the service worker — open the installed app (or serve over HTTPS) and try again.'
+                        : 'You appear to be offline — reconnect and try again.';
+                } finally {
+                    busy(false);
+                }
+            });
+
+            refreshSize();
+        })();
     </script>
 </body>
 

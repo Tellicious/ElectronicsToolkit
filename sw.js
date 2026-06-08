@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'utilities-v30-mic';
+const VERSION = 'utilities-v31-storage';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -86,29 +86,33 @@ const PRECACHE_ASSETS = [
   './apps/time-signal/time-signal.css',
 ];
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(VERSION).then((cache) =>
-      // Fetch every asset bypassing the HTTP cache so a freshly-deployed
-      // version is genuinely re-cached, then store it. Individual failures
-      // are tolerated (allSettled) so one missing/renamed file can't block
-      // the whole install.
-      Promise.allSettled(
-        PRECACHE_ASSETS.map(async (url) => {
-          try {
-            const res = await fetch(url, { cache: 'no-store' });
-            if (res && (res.ok || res.type === 'opaque')) {
-              await cache.put(url, res.clone());
-            } else {
-              throw new Error('bad status ' + (res && res.status));
-            }
-          } catch (err) {
-            console.warn('[SW] precache skip', url, err.message);
-          }
-        })
-      )
-    ).then(() => self.skipWaiting())
+// Fetch every asset bypassing the HTTP cache so a freshly-deployed version is
+// genuinely re-cached, then store it. Individual failures are tolerated so one
+// missing/renamed file can't block the whole operation. Returns a small summary
+// the caller (install, or the "Re-download" button) can report.
+async function precache() {
+  const cache = await caches.open(VERSION);
+  let failed = 0;
+  await Promise.allSettled(
+    PRECACHE_ASSETS.map(async (url) => {
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (res && (res.ok || res.type === 'opaque')) {
+          await cache.put(url, res.clone());
+        } else {
+          throw new Error('bad status ' + (res && res.status));
+        }
+      } catch (err) {
+        failed++;
+        console.warn('[SW] precache skip', url, err.message);
+      }
+    })
   );
+  return { ok: true, total: PRECACHE_ASSETS.length, cached: PRECACHE_ASSETS.length - failed, failed };
+}
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(precache().then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
@@ -123,8 +127,23 @@ self.addEventListener('activate', (event) => {
 // used to activate a pending SW immediately without waiting for
 // all tabs to close.
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+  const data = event.data || {};
+
+  if (data.type === 'SKIP_WAITING') {
     self.skipWaiting();
+    return;
+  }
+
+  // "Re-download the whole program": re-fetch every precached asset and store
+  // it (overwriting in place). localStorage — where all settings live — is
+  // never touched, so preferences survive. Replies on the port the page sent.
+  if (data.type === 'RECACHE') {
+    const reply = (msg) => { if (event.ports && event.ports[0]) event.ports[0].postMessage(msg); };
+    event.waitUntil(
+      precache()
+        .then(reply)
+        .catch((err) => reply({ ok: false, error: String((err && err.message) || err) }))
+    );
   }
 });
 
