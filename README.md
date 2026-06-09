@@ -98,6 +98,10 @@ apps/
     │  ├─ time-signal.js            # Time-signal wave calculation
     │  ├─ time-signal-worklet.js    # Audio output worklet
     │  └─ time-signal.css           # Time-signal specific formatting
+    ├─ tuner/                       # Chromatic tuner (FFT + HPS pitch detection)
+    │  ├─ index.html                # Tuner UI
+    │  ├─ tuner.js                  # Audio capture, FFT + HPS, note/cents mapping
+    │  └─ tuner.css                 # Tuner-specific styles
     └─ voltage-divider/             # Voltage divider calculator
         ├─ index.html               # Voltage divider UI
         └─ voltage-divider.js       # Output voltage and resistor suggestions

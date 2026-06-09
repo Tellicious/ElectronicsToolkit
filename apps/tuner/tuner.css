@@ -1,0 +1,225 @@
+/* Chromatic tuner — app-specific styles.
+ * Built on the shared design tokens in styles.css.
+ */
+
+/* Instrument selector: segmented control that wraps on narrow screens. */
+.tuner-instruments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+}
+
+.tuner-instruments .seg__btn {
+  flex: 1 1 auto;
+  min-width: 56px;
+  border-radius: var(--r-pill);
+  padding: 9px 10px;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.tuner-instruments .seg__btn--active {
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+/* Note readout. */
+.tuner-note {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 18px;
+  padding-top: 6px;
+  min-height: 64px;
+}
+
+.tuner-note__main {
+  font-family: var(--font-mono);
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.tuner-note__side {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.tuner-cents {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  min-height: 1.3em;
+}
+
+.tuner-dir {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-3);
+  min-height: 1.3em;
+  margin-top: 2px;
+}
+
+.tuner-dir--ok {
+  color: var(--good);
+}
+
+/* Horizontal cents meter. */
+.tuner-meter {
+  position: relative;
+  height: 56px;
+  margin: 14px 0 4px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.tuner-meter__zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--good) 22%, transparent);
+}
+
+.tuner-meter__tick {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  background: var(--border-strong);
+}
+
+.tuner-meter__tick--center {
+  height: 100%;
+  width: 2px;
+  background: var(--ink-3);
+}
+
+.tuner-meter__marker {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 50%;
+  width: 4px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  background: var(--accent);
+  transition: left 90ms linear, background 120ms ease;
+}
+
+.tuner-meter--in .tuner-meter__marker {
+  background: var(--good);
+}
+
+.tuner-meter--dim .tuner-meter__marker {
+  background: var(--ink-3);
+  opacity: 0.5;
+}
+
+.tuner-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  padding: 0 2px;
+}
+
+.tuner-freq {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink-3);
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
+  min-height: 1.2em;
+}
+
+.tuner-status {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 6px;
+  min-height: 1.2em;
+}
+
+.tuner-start {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border: none;
+  border-radius: var(--r-md);
+  background: var(--accent);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tuner-start:active {
+  transform: scale(0.99);
+}
+
+.tuner-start[hidden] {
+  display: none;
+}
+
+/* String chips (instrument modes). */
+.tuner-strings {
+  display: flex;
+  gap: 8px;
+}
+
+.tuner-chip {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.tuner-chip--active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.tuner-chip--tuned {
+  border-color: var(--good);
+  color: #fff;
+  background: var(--good);
+}
+
+#stringCard[hidden] {
+  display: none;
+}

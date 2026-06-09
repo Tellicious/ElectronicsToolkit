@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'utilities-v31-storage';
+const VERSION = 'utilities-v32-tuner';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -53,6 +53,7 @@ const PRECACHE_ASSETS = [
   './apps/battery-life/index.html',
   './apps/capacitor/index.html',
   './apps/time-signal/index.html',
+  './apps/tuner/index.html',
   './apps/gps/index.html',
   './apps/mic/index.html',
   './apps/led-resistor/index.html',
@@ -70,6 +71,7 @@ const PRECACHE_ASSETS = [
   './apps/capacitor/capacitor.js',
   './apps/time-signal/time-signal.js',
   './apps/time-signal/time-signal-worklet.js',
+  './apps/tuner/tuner.js',
   './apps/gps/gps.js',
   './apps/mic/mic.js',
   './apps/led-resistor/led-resistor.js',
@@ -84,6 +86,7 @@ const PRECACHE_ASSETS = [
   './apps/number-converter/number-converter.css',
   './apps/resistor/resistor.css',
   './apps/time-signal/time-signal.css',
+  './apps/tuner/tuner.css',
 ];
 
 // Fetch every asset bypassing the HTTP cache so a freshly-deployed version is

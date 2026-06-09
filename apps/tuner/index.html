@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="tuner.css">
+    <script src="../../assets/app.js"></script>
+    <title>Tuner — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+
+        <section class="tool-card">
+            <h2 class="tool-card__title">Tuner</h2>
+            <div class="tuner-instruments" id="segInstrument" role="group" aria-label="Instrument"></div>
+        </section>
+
+        <section class="tool-card">
+            <div class="tuner-note">
+                <span class="tuner-note__side" id="notePrev"></span>
+                <span class="tuner-note__main" id="noteMain">—</span>
+                <span class="tuner-note__side" id="noteNext"></span>
+            </div>
+            <div class="tuner-cents" id="centsVal"></div>
+            <div class="tuner-dir" id="dirVal"></div>
+
+            <div class="tuner-meter" id="meter">
+                <div class="tuner-meter__zone" id="zone"></div>
+                <div class="tuner-meter__ticks" id="meterTicks"></div>
+                <div class="tuner-meter__marker" id="marker"></div>
+            </div>
+            <div class="tuner-scale"><span>-50</span><span>0</span><span>+50</span></div>
+
+            <div class="tuner-freq" id="freqVal"></div>
+            <div id="status" class="tuner-status">Starting…</div>
+
+            <button class="tuner-start" id="startBtn" type="button" hidden>
+                <span id="startLabel">Tap to start listening</span>
+            </button>
+        </section>
+
+        <section class="tool-card" id="stringCard">
+            <h2 class="tool-card__title">Strings</h2>
+            <div class="tuner-strings" id="stringRow"></div>
+        </section>
+    </main>
+    <script src="../../assets/sensorkit/fft.js"></script>
+    <script src="tuner.js"></script>
+</body>
+
+</html>
