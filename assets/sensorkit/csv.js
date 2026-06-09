@@ -28,7 +28,10 @@
       try {
         const file = new File([blob], filename, { type: 'text/csv' });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: filename });
+          // Share only the file. Passing `title`/`text` alongside `files`
+          // makes iOS attach the title as a separate .txt, so the export
+          // ends up as two files instead of just the CSV.
+          await navigator.share({ files: [file] });
           return;
         }
       } catch (_) { /* user cancelled or unsupported — fall through to download */ }

@@ -100,32 +100,6 @@
         </section>
 
         <section class="tool-card">
-            <h2 class="tool-card__title">GPS</h2>
-            <div class="settings-list">
-                <div class="settings-item settings-item--stack">
-                    <strong>Coordinate format</strong><span>Decimal degrees or degrees / minutes / seconds.</span>
-                    <div class="pill-seg" id="segCoord" role="group" aria-label="Coordinate format">
-                        <button class="seg__btn" type="button" data-value="dec">Decimal</button>
-                        <button class="seg__btn" type="button" data-value="dms">DMS</button>
-                    </div>
-                </div>
-                <div class="settings-item settings-item--stack">
-                    <strong>Speed unit</strong><span>Used for speed readouts and the speed chart.</span>
-                    <div class="pill-seg" id="segSpeed" role="group" aria-label="Speed unit">
-                        <button class="seg__btn" type="button" data-value="mps">m/s</button>
-                        <button class="seg__btn" type="button" data-value="kmh">km/h</button>
-                    </div>
-                </div>
-                <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Movement threshold</strong><span class="set-val"
-                            id="gpsThrVal"></span></div>
-                    <span>Speeds below this count as stationary.</span>
-                    <input id="gpsThr" class="set-range" type="range" min="0" max="5" step="0.1">
-                </div>
-            </div>
-        </section>
-
-        <section class="tool-card">
             <h2 class="tool-card__title">Storage</h2>
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
@@ -149,16 +123,6 @@
             paint(get());
         }
         pills('segTheme', () => window.UtilitiesSettings.theme, v => { window.UtilitiesSettings.theme = v; });
-        pills('segCoord', () => localStorage.getItem('gps.coordFormat') || 'dec', v => localStorage.setItem('gps.coordFormat', v));
-        pills('segSpeed', () => localStorage.getItem('gps.speedUnit') || 'mps', v => { localStorage.setItem('gps.speedUnit', v); paintThr(); });
-        const th = document.getElementById('gpsThr');
-        th.value = parseFloat(localStorage.getItem('gps.threshold')) || 0.5;
-        function paintThr() {
-            const v = parseFloat(th.value), u = localStorage.getItem('gps.speedUnit') || 'mps';
-            document.getElementById('gpsThrVal').textContent = u === 'kmh' ? (v * 3.6).toFixed(1) + ' km/h' : v.toFixed(1) + ' m/s';
-        }
-        th.addEventListener('input', () => { localStorage.setItem('gps.threshold', th.value); paintThr(); });
-        paintThr();
 
         // --- Storage / offline cache -----------------------------------
         (function () {

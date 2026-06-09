@@ -193,15 +193,34 @@
   });
 
   // --- Settings ----------------------------------------------------------
-  // Only CSV logging is configured on this page. Coordinate format, speed
-  // unit, and movement threshold live on the global Settings page and are read
-  // from localStorage at load (see SETTINGS above).
+  // CSV logging plus the GPS readout settings (coordinate format, speed unit,
+  // movement threshold) now live on this page and apply live.
   const logToggle = document.getElementById('logToggle');
   logToggle.checked = SETTINGS.logging;
   logToggle.addEventListener('change', () => {
     SETTINGS.logging = logToggle.checked;
     localStorage.setItem('gps.logging', logToggle.checked ? 'on' : 'off');
   });
+
+  function pills(id, key, store, after) {
+    const g = document.getElementById(id), bs = [...g.querySelectorAll('.seg__btn')];
+    const paint = v => bs.forEach(b => b.classList.toggle('seg__btn--active', b.dataset.value === v));
+    bs.forEach(b => b.addEventListener('click', () => {
+      SETTINGS[key] = b.dataset.value; localStorage.setItem(store, b.dataset.value); paint(b.dataset.value); if (after) after();
+    }));
+    paint(SETTINGS[key]);
+  }
+  pills('segCoord', 'coord', 'gps.coordFormat', renderReadout);
+  pills('segSpeed', 'speed', 'gps.speedUnit', () => { refreshChartTitles(); speedChart.setOptions({}); renderKpis(); paintThr(); });
+
+  const thr = document.getElementById('gpsThr');
+  thr.value = SETTINGS.thr;
+  function paintThr() {
+    const v = parseFloat(thr.value);
+    U.setText('gpsThrVal', SETTINGS.speed === 'kmh' ? (v * 3.6).toFixed(1) + ' km/h' : v.toFixed(1) + ' m/s');
+  }
+  thr.addEventListener('input', () => { SETTINGS.thr = parseFloat(thr.value); localStorage.setItem('gps.threshold', thr.value); paintThr(); });
+  paintThr();
 
   // --- Center map on current position ------------------------------------
   document.getElementById('mapCenter').addEventListener('click', () => {
