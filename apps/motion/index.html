@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="../../assets/sensorkit/sensorkit.css">
+    <link rel="stylesheet" href="motion.css">
+    <script src="../../assets/app.js"></script>
+    <title>Motion — Electronics Toolkit</title>
+</head>
+
+<body>
+    <header class="appbar"><a class="appbar__back" href="../../index.html"><svg width="11" height="18"
+                viewBox="0 0 11 18" fill="none">
+                <path d="M9.5 1.5L1.5 9l8 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg><span>Electronics Toolkit</span></a><span class="appbar__spacer"></span></header>
+    <main class="tool-shell">
+
+        <!-- Per-axis live values + dominant frequency + status -->
+        <section class="tool-card">
+            <h2 class="tool-card__title">Motion</h2>
+            <div class="motion-axes">
+                <div class="motion-axis">
+                    <div class="motion-axis__name" style="color:#ff3b30">X</div>
+                    <div class="motion-axis__cur"><span id="curX">—</span><span class="motion-axis__u"
+                            id="uAccX">m/s²</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">RMS</span><span id="rmsX">—</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">pk</span><span id="pkX">—</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">ω</span><span id="gyrX">—</span><span
+                            class="motion-axis__u" id="uGyrX">°/s</span></div>
+                </div>
+                <div class="motion-axis">
+                    <div class="motion-axis__name" style="color:#34c759">Y</div>
+                    <div class="motion-axis__cur"><span id="curY">—</span><span class="motion-axis__u"
+                            id="uAccY">m/s²</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">RMS</span><span id="rmsY">—</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">pk</span><span id="pkY">—</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">ω</span><span id="gyrY">—</span><span
+                            class="motion-axis__u" id="uGyrY">°/s</span></div>
+                </div>
+                <div class="motion-axis">
+                    <div class="motion-axis__name" style="color:#0a84ff">Z</div>
+                    <div class="motion-axis__cur"><span id="curZ">—</span><span class="motion-axis__u"
+                            id="uAccZ">m/s²</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">RMS</span><span id="rmsZ">—</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">pk</span><span id="pkZ">—</span></div>
+                    <div class="motion-axis__row"><span class="motion-axis__k">ω</span><span id="gyrZ">—</span><span
+                            class="motion-axis__u" id="uGyrZ">°/s</span></div>
+                </div>
+            </div>
+            <div class="sk-readout">
+                <div class="sk-readout__row"><span class="sk-readout__label">Dominant frequency</span><span id="domFreq"
+                        class="sk-readout__value">— Hz</span></div>
+            </div>
+            <div id="status" class="sk-status">Tap Start to begin (motion permission required).</div>
+        </section>
+
+        <!-- Controls + CSV -->
+        <section class="tool-card">
+            <div class="sk-toggle-row">
+                <span class="sk-toggle-row__label">CSV logging</span>
+                <label class="sk-switch"><input type="checkbox" id="logToggle"><span
+                        class="sk-switch__track"></span></label>
+            </div>
+            <div id="controls"></div>
+        </section>
+
+        <!-- Acceleration + rotation scopes (merged), spectrum, vibration history -->
+        <section class="tool-card">
+            <div class="sk-panel" data-panel style="margin-top:0">
+                <div class="sk-panel__head"><span class="sk-panel__title">Acceleration — time domain</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartAcc"></div>
+            </div>
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Rotation rate — time domain</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartGyr"></div>
+            </div>
+            <p class="motion-hint">Pinch or scroll to zoom the time axis · drag with two fingers to scroll back to the
+                start · double-tap to resume the live view.</p>
+
+            <div class="settings-item settings-item--stack" style="border:0;padding:8px 0 4px">
+                <div class="set-rowline"><strong>Analyse</strong></div>
+                <select id="selTarget" class="tool-select"></select>
+            </div>
+            <div class="sk-panel" data-panel style="margin-top:6px">
+                <div class="sk-panel__head"><span class="sk-panel__title">Frequency domain</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartSpec"></div>
+            </div>
+
+            <div class="sk-panel" data-panel>
+                <div class="sk-panel__head"><span class="sk-panel__title">Vibration history</span>
+                    <button class="sk-fs-btn" data-fs type="button" aria-label="Fullscreen"><svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg></button>
+                </div>
+                <div class="sk-frame" id="chartHist"></div>
+            </div>
+        </section>
+
+        <!-- Measurement -->
+        <section class="tool-card">
+            <h2 class="tool-card__title">Measurement</h2>
+            <div class="settings-list">
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Acceleration source</strong></div>
+                    <div class="pill-seg" id="segSource" role="group" aria-label="Acceleration source">
+                        <button class="seg__btn" type="button" data-value="linear">Linear</button>
+                        <button class="seg__btn" type="button" data-value="gravity">+ Gravity</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Acceleration unit</strong></div>
+                    <div class="pill-seg" id="segAccUnit" role="group" aria-label="Acceleration unit">
+                        <button class="seg__btn" type="button" data-value="ms2">m/s²</button>
+                        <button class="seg__btn" type="button" data-value="g">g</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Rotation unit</strong></div>
+                    <div class="pill-seg" id="segGyrUnit" role="group" aria-label="Rotation unit">
+                        <button class="seg__btn" type="button" data-value="dps">°/s</button>
+                        <button class="seg__btn" type="button" data-value="rads">rad/s</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FFT -->
+        <section class="tool-card">
+            <h2 class="tool-card__title">FFT</h2>
+            <div class="settings-list">
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Window function</strong></div>
+                    <select id="selWindow" class="tool-select"></select>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Window length (samples)</strong></div>
+                    <select id="selSize" class="tool-select"></select>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Coupling</strong></div>
+                    <div class="pill-seg" id="segCouple" role="group" aria-label="Coupling">
+                        <button class="seg__btn" type="button" data-value="ac">AC</button>
+                        <button class="seg__btn" type="button" data-value="dc">DC</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Frequency axis</strong></div>
+                    <div class="pill-seg" id="segLogX" role="group" aria-label="Frequency axis">
+                        <button class="seg__btn" type="button" data-value="lin">Linear</button>
+                        <button class="seg__btn" type="button" data-value="log">Log</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Amplitude axis</strong></div>
+                    <div class="pill-seg" id="segDb" role="group" aria-label="Amplitude axis">
+                        <button class="seg__btn" type="button" data-value="lin">Linear</button>
+                        <button class="seg__btn" type="button" data-value="db">dB</button>
+                    </div>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Dominant frequencies</strong><span class="set-val"
+                            id="peaksVal"></span></div>
+                    <input id="selPeaks" class="set-range" type="range" min="1" max="5" step="1">
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <div class="set-rowline"><strong>Dominant freq. smoothing</strong></div>
+                    <select id="selSmooth" class="tool-select"></select>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../../assets/sensorkit/format.js"></script>
+    <script src="../../assets/sensorkit/csv.js"></script>
+    <script src="../../assets/sensorkit/kpi.js"></script>
+    <script src="../../assets/sensorkit/controls.js"></script>
+    <script src="../../assets/sensorkit/chart.js"></script>
+    <script src="../../assets/sensorkit/liveplot.js"></script>
+    <script src="../../assets/sensorkit/fft.js"></script>
+    <script src="../../assets/sensorkit/multiplot.js"></script>
+    <script src="motion.js"></script>
+</body>
+
+</html>

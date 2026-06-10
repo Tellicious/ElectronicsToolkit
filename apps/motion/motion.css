@@ -1,0 +1,126 @@
+/* Motion — app-specific styles (tokens from styles.css / sensorkit.css). */
+
+/* Per-axis summary boxes in the header card (X / Y / Z). */
+.motion-axes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 10px 0 6px;
+}
+
+.motion-axis {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 6px 8px;
+  text-align: center;
+  min-width: 0;
+}
+
+.motion-axis__name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+
+/* Current acceleration — the largest value in each box. */
+.motion-axis__cur {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.motion-axis__cur .motion-axis__u {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.motion-axis__u {
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+}
+
+/* RMS / signed-peak / gyro rows beneath the current value. */
+.motion-axis__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.motion-axis__row .motion-axis__u {
+  font-size: 10px;
+}
+
+.motion-axis__k {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Interaction hint under the time-domain scopes. */
+.motion-hint {
+  margin: 10px 2px 2px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+/* Legend for MultiPlot traces (tap a chip to show/hide that trace).
+   Lives here for now since Motion is the only consumer; move into
+   sensorkit.css if other apps start using MultiPlot. */
+.sk-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.sk-legend__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sk-legend__chip:active {
+  transform: scale(0.98);
+}
+
+.sk-legend__chip--off {
+  opacity: 0.4;
+}
+
+.sk-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
