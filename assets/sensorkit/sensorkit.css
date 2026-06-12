@@ -128,7 +128,7 @@
 }
 
 /* Three-option segmented pill on a single row. */
-.pill-seg--3 {
+.seg--pill-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 

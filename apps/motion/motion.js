@@ -86,7 +86,7 @@
     fmtX: v => v.toFixed(1) + ' Hz', fmtY: v => v.toFixed(2), empty: 'Start to view spectrum',
   });
   const hist = new SK.TimeSeriesChart(document.getElementById('chartHist'), {
-    color: '#34c759', symmetric: false, fmt: v => v.toFixed(2), empty: 'Vibration RMS appears here',
+    color: '#34c759', symmetric: false, fmtY: v => v.toFixed(2), empty: 'Vibration RMS appears here',
   });
 
   // --- CSV (logged in SI base units regardless of display unit) ----------
@@ -368,46 +368,49 @@
     },
   });
 
-  // --- Settings: segmented pills ----------------------------------------
-  function paintSeg(id, val) {
-    const g = document.getElementById(id); if (!g) return;
-    g.querySelectorAll('.seg__btn').forEach(b => b.classList.toggle('seg__btn--active', b.dataset.value === val));
-  }
-  function wireSeg(id, onPick) {
-    const g = document.getElementById(id); if (!g) return;
-    g.querySelectorAll('.seg__btn').forEach(b => b.addEventListener('click', () => onPick(b.dataset.value)));
-  }
-
-  paintSeg('segSource', SETTINGS.accelSource);
-  wireSeg('segSource', v => {
-    SETTINGS.accelSource = v; ls.setItem('motion.accelSource', v); paintSeg('segSource', v);
-    // Linear and +gravity aren't comparable: break the accel trace at the switch
-    // (so earlier samples stay scrollable) and reset the per-axis peaks.
-    st.peakSigned = { x: NaN, y: NaN, z: NaN };
-    accChart.pushBreak();
-    updateBoxes(recentData(accelOf));
+  // --- Settings: segmented pills (shared SensorKit control) -------------
+  new SK.Segmented('segSource', {
+    value: SETTINGS.accelSource,
+    onChange: v => {
+      SETTINGS.accelSource = v; ls.setItem('motion.accelSource', v);
+      // Linear and +gravity aren't comparable: break the accel trace at the switch
+      // (so earlier samples stay scrollable) and reset the per-axis peaks.
+      st.peakSigned = { x: NaN, y: NaN, z: NaN };
+      accChart.pushBreak();
+      updateBoxes(recentData(accelOf));
+    },
   });
 
-  paintSeg('segAccUnit', SETTINGS.accelUnit);
-  wireSeg('segAccUnit', v => {
-    SETTINGS.accelUnit = v; ls.setItem('motion.accelUnit', v); paintSeg('segAccUnit', v);
-    paintUnits(); accChart.redraw(); updateBoxes(recentData(accelOf));
+  new SK.Segmented('segAccUnit', {
+    value: SETTINGS.accelUnit,
+    onChange: v => {
+      SETTINGS.accelUnit = v; ls.setItem('motion.accelUnit', v);
+      paintUnits(); accChart.redraw(); updateBoxes(recentData(accelOf));
+    },
   });
 
-  paintSeg('segGyrUnit', SETTINGS.gyroUnit);
-  wireSeg('segGyrUnit', v => {
-    SETTINGS.gyroUnit = v; ls.setItem('motion.gyroUnit', v); paintSeg('segGyrUnit', v);
-    paintUnits(); gyrChart.redraw(); updateBoxes(recentData(accelOf));
+  new SK.Segmented('segGyrUnit', {
+    value: SETTINGS.gyroUnit,
+    onChange: v => {
+      SETTINGS.gyroUnit = v; ls.setItem('motion.gyroUnit', v);
+      paintUnits(); gyrChart.redraw(); updateBoxes(recentData(accelOf));
+    },
   });
 
-  paintSeg('segCouple', SETTINGS.coupling);
-  wireSeg('segCouple', v => { SETTINGS.coupling = v; ls.setItem('motion.coupling', v); paintSeg('segCouple', v); fft.configure({ coupling: v }); });
+  new SK.Segmented('segCouple', {
+    value: SETTINGS.coupling,
+    onChange: v => { SETTINGS.coupling = v; ls.setItem('motion.coupling', v); fft.configure({ coupling: v }); },
+  });
 
-  paintSeg('segLogX', SETTINGS.logX ? 'log' : 'lin');
-  wireSeg('segLogX', v => { SETTINGS.logX = v === 'log'; ls.setItem('motion.logX', SETTINGS.logX ? 'on' : 'off'); paintSeg('segLogX', v); });
+  new SK.Segmented('segLogX', {
+    value: SETTINGS.logX ? 'log' : 'lin',
+    onChange: v => { SETTINGS.logX = v === 'log'; ls.setItem('motion.logX', SETTINGS.logX ? 'on' : 'off'); },
+  });
 
-  paintSeg('segDb', SETTINGS.db ? 'db' : 'lin');
-  wireSeg('segDb', v => { SETTINGS.db = v === 'db'; ls.setItem('motion.db', SETTINGS.db ? 'on' : 'off'); paintSeg('segDb', v); });
+  new SK.Segmented('segDb', {
+    value: SETTINGS.db ? 'db' : 'lin',
+    onChange: v => { SETTINGS.db = v === 'db'; ls.setItem('motion.db', SETTINGS.db ? 'on' : 'off'); },
+  });
 
   // --- Settings: selects + range ----------------------------------------
   // Overall absolute value (|a| / |ω|) listed before the individual axes.

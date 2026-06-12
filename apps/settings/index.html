@@ -14,11 +14,11 @@
             display: block;
         }
 
-        .settings-item--stack .pill-seg {
+        .settings-item--stack .seg--pill {
             margin-top: 10px;
         }
 
-        .pill-seg--3 {
+        .seg--pill-3 {
             grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
@@ -90,7 +90,7 @@
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
                     <strong>Theme</strong><span>Follow system, light, or dark.</span>
-                    <div class="pill-seg pill-seg--3" id="segTheme" role="group" aria-label="Theme">
+                    <div class="seg--pill seg--pill-3" id="segTheme" role="group" aria-label="Theme">
                         <button class="seg__btn" type="button" data-value="auto">Auto</button>
                         <button class="seg__btn" type="button" data-value="light">Light</button>
                         <button class="seg__btn" type="button" data-value="dark">Dark</button>
@@ -115,14 +115,12 @@
             <p id="storageStatus" class="tool-note" aria-live="polite"></p>
         </section>
     </main>
+    <script src="../../assets/sensorkit/segmented.js"></script>
     <script>
-        function pills(id, get, set) {
-            const g = document.getElementById(id), bs = [...g.querySelectorAll('.seg__btn')];
-            const paint = v => bs.forEach(b => b.classList.toggle('seg__btn--active', b.dataset.value === v));
-            bs.forEach(b => b.addEventListener('click', () => { set(b.dataset.value); paint(b.dataset.value); }));
-            paint(get());
-        }
-        pills('segTheme', () => window.UtilitiesSettings.theme, v => { window.UtilitiesSettings.theme = v; });
+        new window.SensorKit.Segmented('segTheme', {
+            value: window.UtilitiesSettings.theme,
+            onChange: v => { window.UtilitiesSettings.theme = v; },
+        });
 
         // --- Storage / offline cache -----------------------------------
         (function () {

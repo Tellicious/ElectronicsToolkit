@@ -531,7 +531,7 @@ button {
   margin: 4px 0 14px;
 }
 
-.pill-seg {
+.seg--pill {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
@@ -541,7 +541,7 @@ button {
   border-radius: var(--r-pill);
 }
 
-.pill-seg .seg__btn {
+.seg--pill .seg__btn {
   border-radius: var(--r-pill);
   padding: 10px 12px;
   font-size: 15px;
@@ -549,7 +549,7 @@ button {
   color: var(--ink-2);
 }
 
-.pill-seg .seg__btn--active {
+.seg--pill .seg__btn--active {
   background: var(--surface);
   color: var(--accent);
   box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
@@ -653,7 +653,7 @@ button {
   display: block;
 }
 
-.settings-item--stack>.pill-seg,
+.settings-item--stack>.seg--pill,
 .settings-item--stack>.set-range,
 .settings-item--stack>.tool-select {
   margin-top: 10px;

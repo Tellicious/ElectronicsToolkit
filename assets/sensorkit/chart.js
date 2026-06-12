@@ -1,6 +1,6 @@
 /* SensorKit — lightweight canvas time-series chart.
  *
- * opts: { color, scale(rawY)->displayY, fmt(displayY)->string, xfmt(sec)->string, empty }
+ * opts: { color, scale(rawY)->displayY, fmtY(displayY)->string, fmtX(sec)->string, empty }
  * Stores raw Y values; `scale` converts to display units at draw time so a unit
  * toggle is just a redraw. x is elapsed seconds.
  *
@@ -15,7 +15,7 @@
 
   const PAD = { l: 46, r: 10, t: 10, b: 26 };
   const cssVar = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  const defaultXfmt = s => {
+  const defaultFmtX = s => {
     s = Math.round(s);
     if (s < 60) return s + 's';
     const m = Math.floor(s / 60), ss = s % 60;
@@ -24,7 +24,7 @@
 
   class TimeSeriesChart {
     constructor(container, opts = {}) {
-      this.opts = Object.assign({ color: '#0a84ff', scale: v => v, fmt: v => String(Math.round(v)), xfmt: defaultXfmt, empty: 'Waiting for data…' }, opts);
+      this.opts = Object.assign({ color: '#0a84ff', scale: v => v, fmtY: v => String(Math.round(v)), fmtX: defaultFmtX, empty: 'Waiting for data…' }, opts);
       this.container = container;
       this.xs = []; this.ys = [];
       this.hoverX = null;
@@ -166,7 +166,7 @@
         const val = ymax - i * (ymax - ymin) / 4;
         const y = py(val);
         ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(W - PAD.r, y); ctx.stroke();
-        ctx.fillText(this.opts.fmt(val), 4, y);
+        ctx.fillText(this.opts.fmtY(val), 4, y);
       }
 
       // X axis: 5 evenly spaced ticks (gridline + label), reflecting the view.
@@ -180,7 +180,7 @@
         ctx.beginPath(); ctx.moveTo(xx, PAD.t); ctx.lineTo(xx, H - PAD.b); ctx.stroke();
         ctx.globalAlpha = 1; ctx.fillStyle = ink3;
         ctx.textAlign = i === 0 ? 'left' : i === XT - 1 ? 'right' : 'center';
-        ctx.fillText(this.opts.xfmt(xv), xx, H - 6);
+        ctx.fillText(this.opts.fmtX(xv), xx, H - 6);
       }
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
 
@@ -216,7 +216,7 @@
           ctx.strokeStyle = ink3; ctx.lineWidth = 1;
           ctx.beginPath(); ctx.moveTo(X, PAD.t); ctx.lineTo(X, H - PAD.b); ctx.stroke();
           ctx.fillStyle = color; ctx.beginPath(); ctx.arc(X, Y, 3.5, 0, Math.PI * 2); ctx.fill();
-          const label = `${this.opts.fmt(S(this.ys[best]))} · ${this.opts.xfmt(this.xs[best])}`;
+          const label = `${this.opts.fmtY(S(this.ys[best]))} · ${this.opts.fmtX(this.xs[best])}`;
           const tw = ctx.measureText(label).width + 10;
           let tx = X + 6; if (tx + tw > W - PAD.r) tx = X - 6 - tw;
           ctx.fillStyle = 'rgba(0,0,0,0.72)'; ctx.fillRect(tx, PAD.t, tw, 18);

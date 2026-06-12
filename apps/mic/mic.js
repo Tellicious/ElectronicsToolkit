@@ -43,7 +43,7 @@
   const spectrum = new SK.LivePlot(document.getElementById('chartSpec'),
     { color: '#ff9f0a', symmetric: false, yMin: -60, yMax: 95, logX: true, fill: true, peakLine: true, fmtX: v => (v >= 1000 ? (v / 1000).toFixed(1) + 'k' : Math.round(v)), fmtY: v => v.toFixed(0), empty: 'Start to view spectrum' });
   const levelHist = new SK.TimeSeriesChart(document.getElementById('chartLevel'),
-    { color: '#34c759', symmetric: false, yMin: 30, fmt: v => v.toFixed(0) });
+    { color: '#34c759', symmetric: false, yMin: 30, fmtY: v => v.toFixed(0) });
 
   // --- CSV ---------------------------------------------------------------
   const csv = new SK.CsvLogger([
@@ -255,12 +255,10 @@
     const w = SETTINGS.weighting.toUpperCase(), t = SETTINGS.timeWeight[0].toUpperCase() + SETTINGS.timeWeight.slice(1);
     U.setText('levelSub', `L${w === 'Z' ? 'Z' : w} · ${t}`);
   }
-  function pills(id, key, store, after) {
-    const g = document.getElementById(id), bs = [...g.querySelectorAll('.seg__btn')];
-    const paint = v => bs.forEach(b => b.classList.toggle('seg__btn--active', b.dataset.value === v));
-    bs.forEach(b => b.addEventListener('click', () => { SETTINGS[key] = b.dataset.value; localStorage.setItem(store, b.dataset.value); paint(b.dataset.value); if (after) after(); }));
-    paint(SETTINGS[key]);
-  }
+  const pills = (id, key, store, after) => new SK.Segmented(id, {
+    value: SETTINGS[key],
+    onChange: v => { SETTINGS[key] = v; localStorage.setItem(store, v); if (after) after(); },
+  });
   pills('segWeight', 'weighting', 'mic.weighting', levelSub);
   pills('segTime', 'timeWeight', 'mic.timeWeight', levelSub);
   pills('segCouple', 'coupling', 'mic.coupling', () => fft && fft.configure({ coupling: SETTINGS.coupling }));

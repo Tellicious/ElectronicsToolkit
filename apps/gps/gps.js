@@ -26,11 +26,11 @@
 
   // --- Charts ------------------------------------------------------------
   const speedChart = new SK.TimeSeriesChart(document.getElementById('chartSpeed'),
-    { color: '#0a84ff', symmetric: false, yMin: 0, scale: v => (SETTINGS.speed === 'kmh' ? v * 3.6 : v), fmt: v => v.toFixed(1) });
+    { color: '#0a84ff', symmetric: false, yMin: 0, scale: v => (SETTINGS.speed === 'kmh' ? v * 3.6 : v), fmtY: v => v.toFixed(1) });
   const altChart = new SK.TimeSeriesChart(document.getElementById('chartAlt'),
-    { color: '#34c759', symmetric: false, fmt: v => v.toFixed(0) });
+    { color: '#34c759', symmetric: false, fmtY: v => v.toFixed(0) });
   const hdgChart = new SK.TimeSeriesChart(document.getElementById('chartHdg'),
-    { color: '#ff9f0a', symmetric: false, fmt: v => v.toFixed(0) });
+    { color: '#ff9f0a', symmetric: false, fmtY: v => v.toFixed(0) });
 
   function panelTitle(frameId) {
     return document.getElementById(frameId).closest('[data-panel]').querySelector('.sk-panel__title');
@@ -202,14 +202,10 @@
     localStorage.setItem('gps.logging', logToggle.checked ? 'on' : 'off');
   });
 
-  function pills(id, key, store, after) {
-    const g = document.getElementById(id), bs = [...g.querySelectorAll('.seg__btn')];
-    const paint = v => bs.forEach(b => b.classList.toggle('seg__btn--active', b.dataset.value === v));
-    bs.forEach(b => b.addEventListener('click', () => {
-      SETTINGS[key] = b.dataset.value; localStorage.setItem(store, b.dataset.value); paint(b.dataset.value); if (after) after();
-    }));
-    paint(SETTINGS[key]);
-  }
+  const pills = (id, key, store, after) => new SK.Segmented(id, {
+    value: SETTINGS[key],
+    onChange: v => { SETTINGS[key] = v; localStorage.setItem(store, v); if (after) after(); },
+  });
   pills('segCoord', 'coord', 'gps.coordFormat', renderReadout);
   pills('segSpeed', 'speed', 'gps.speedUnit', () => { refreshChartTitles(); speedChart.setOptions({}); renderKpis(); paintThr(); });
 
