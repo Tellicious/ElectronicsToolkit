@@ -9,6 +9,45 @@
     <link rel="manifest" href="../../manifest.json">
     <link rel="stylesheet" href="../../assets/styles.css">
     <script src="../../assets/app.js"></script>
+    <style>
+        .vd-hide {
+            display: none;
+        }
+
+        .vd-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .vd-pair__item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 10px 12px;
+        }
+
+        .vd-pair__label {
+            font-size: 12px;
+            color: var(--ink-3);
+        }
+
+        .vd-pair__val {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+            margin-top: 3px;
+        }
+
+        .vd-pair__sub {
+            font-size: 12px;
+            color: var(--ink-3);
+            margin-top: 3px;
+        }
+    </style>
     <title>Voltage Divider — Electronics Toolkit</title>
 </head>
 
@@ -21,6 +60,12 @@
     <main class="tool-shell">
         <section class="tool-card">
             <h2 class="tool-card__title">Voltage Divider</h2>
+            <div class="control-stack">
+                <div class="seg--pill" id="segMode" role="group" aria-label="Calculation mode">
+                    <button class="seg__btn seg__btn--active" type="button" data-mode="design">Find R1 &amp; R2</button>
+                    <button class="seg__btn" type="button" data-mode="vout">Find V<sub>out</sub></button>
+                </div>
+            </div>
             <div class="mini-schematic" aria-label="Voltage divider schematic"><svg viewBox="0 0 220 186" fill="none">
                     <g stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="105,18 105,32 115,37 95,45 115,53 95,61 115,69 95,77 105,82 105,102"
@@ -37,17 +82,52 @@
                     <text x="126" y="139">R<tspan x="137" y="141" font-size="12">2</tspan>
                     </text><text x="160" y="99">V<tspan x="171" y="101" font-size="12">out</tspan></text>
                 </svg></div>
-            <div class="tool-row"><label><span class="tool-label">Input voltage</span><input id="vin" class="tool-input"
-                        inputmode="decimal"></label><span class="tool-unit">V</span></div>
-            <div class="tool-row"><label><span class="tool-label">Top resistor R1</span><input id="r1"
-                        class="tool-input" inputmode="decimal"></label><span class="tool-unit">Ω</span>
+            <div id="modeVout">
+                <div class="tool-row"><label><span class="tool-label">Input voltage</span><input id="vin"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">V</span></div>
+                <div class="tool-row"><label><span class="tool-label">Top resistor R1</span><input id="r1"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">Ω</span>
+                </div>
+                <div class="tool-row"><label><span class="tool-label">Bottom resistor R2</span><input id="r2"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">Ω</span>
+                </div>
+                <div class="tool-result">
+                    <div id="vdValue" class="tool-result__value">—</div>
+                    <div id="vdMeta" class="tool-result__meta"></div>
+                </div>
             </div>
-            <div class="tool-row"><label><span class="tool-label">Bottom resistor R2</span><input id="r2"
-                        class="tool-input" inputmode="decimal"></label><span class="tool-unit">Ω</span>
-            </div>
-            <div class="tool-result">
-                <div id="vdValue" class="tool-result__value">—</div>
-                <div id="vdMeta" class="tool-result__meta"></div>
+            <div id="modeDesign" class="vd-hide">
+                <div class="tool-row"><label><span class="tool-label">Input voltage</span><input id="dvin"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">V</span></div>
+                <div class="tool-row"><label><span class="tool-label">Output voltage</span><input id="dvout"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">V</span></div>
+                <div class="tool-row"><label><span class="tool-label">Max current</span><input id="dimax"
+                            class="tool-input" inputmode="decimal"></label><span class="tool-unit">mA</span></div>
+                <div class="settings-item settings-item--stack">
+                    <div class="tool-label">Resistor series</div>
+                    <div class="seg--pill seg--pill-3" id="segSeries" role="group"
+                        aria-label="Standard resistor series">
+                        <button class="seg__btn" type="button" data-series="E12">E12</button>
+                        <button class="seg__btn seg__btn--active" type="button" data-series="E24">E24</button>
+                        <button class="seg__btn" type="button" data-series="E96">E96</button>
+                    </div>
+                </div>
+                <div class="tool-result">
+                    <div class="vd-pair">
+                        <div class="vd-pair__item">
+                            <div class="vd-pair__label">R1 (top)</div>
+                            <div id="dvR1" class="vd-pair__val">—</div>
+                            <div id="dvR1sub" class="vd-pair__sub"></div>
+                        </div>
+                        <div class="vd-pair__item">
+                            <div class="vd-pair__label">R2 (bottom)</div>
+                            <div id="dvR2" class="vd-pair__val">—</div>
+                            <div id="dvR2sub" class="vd-pair__sub"></div>
+                        </div>
+                    </div>
+                    <div id="dvMeta" class="tool-result__meta"></div>
+                    <div id="dvNote" class="tool-note"></div>
+                </div>
             </div>
         </section>
     </main>

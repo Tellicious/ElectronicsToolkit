@@ -111,11 +111,11 @@
   transition: transform 0.2s ease;
 }
 
-.sk-switch input:checked + .sk-switch__track {
+.sk-switch input:checked+.sk-switch__track {
   background: #34c759;
 }
 
-.sk-switch input:checked + .sk-switch__track::before {
+.sk-switch input:checked+.sk-switch__track::before {
   transform: translateX(20px);
 }
 
@@ -125,11 +125,6 @@
   justify-content: space-between;
   gap: 12px;
   margin-top: 14px;
-}
-
-/* Three-option segmented pill on a single row. */
-.seg--pill-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 /* ---- Panels (chart / map) + fullscreen -------------------------------- */

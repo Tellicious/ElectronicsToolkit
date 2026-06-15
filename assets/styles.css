@@ -541,6 +541,10 @@ button {
   border-radius: var(--r-pill);
 }
 
+.seg--pill-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .seg--pill .seg__btn {
   border-radius: var(--r-pill);
   padding: 10px 12px;
