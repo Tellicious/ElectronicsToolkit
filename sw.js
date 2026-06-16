@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'electronicsToolkit-v1.0.35';
+const VERSION = 'electronicsToolkit-v1.0.36';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -91,6 +91,7 @@ const PRECACHE_ASSETS = [
   './apps/time-signal/time-signal.css',
   './apps/motion/motion.css',
   './apps/tuner/tuner.css',
+  './apps/voltage-divider/voltage-divider.css',
 ];
 
 // Fetch every asset bypassing the HTTP cache so a freshly-deployed version is

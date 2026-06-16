@@ -30,7 +30,7 @@
                 <div class="sk-readout__row"><span class="sk-readout__label">Dominant frequency</span><span id="domFreq"
                         class="sk-readout__value">— Hz</span></div>
             </div>
-            <div id="status" class="sk-status">Tap Start to begin (microphone permission required).</div>
+            <div id="status" class="status-line">Tap Start to begin (microphone permission required).</div>
         </section>
 
         <section class="tool-card">
@@ -80,7 +80,7 @@
             <h2 class="tool-card__title">Measurement</h2>
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Frequency weighting</strong></div>
+                    <div class="settings-rowline"><strong>Frequency weighting</strong></div>
                     <div class="seg--pill seg--pill-3" id="segWeight" role="group" aria-label="Weighting">
                         <button class="seg__btn" type="button" data-value="z">Z</button>
                         <button class="seg__btn" type="button" data-value="a">A</button>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Time weighting</strong></div>
+                    <div class="settings-rowline"><strong>Time weighting</strong></div>
                     <div class="seg--pill seg--pill-3" id="segTime" role="group" aria-label="Time weighting">
                         <button class="seg__btn" type="button" data-value="fast">Fast</button>
                         <button class="seg__btn" type="button" data-value="slow">Slow</button>
@@ -96,9 +96,9 @@
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Calibration offset</strong><span class="set-val"
+                    <div class="settings-rowline"><strong>Calibration offset</strong><span class="settings-value"
                             id="calVal"></span></div>
-                    <input id="calInput" class="set-range" type="range" min="0" max="150" step="1">
+                    <input id="calInput" class="settings-range" type="range" min="0" max="150" step="1">
                 </div>
             </div>
         </section>
@@ -107,31 +107,31 @@
             <h2 class="tool-card__title">FFT</h2>
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Window function</strong></div>
+                    <div class="settings-rowline"><strong>Window function</strong></div>
                     <select id="selWindow" class="tool-select"></select>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Window length (samples)</strong></div>
+                    <div class="settings-rowline"><strong>Window length (samples)</strong></div>
                     <select id="selSize" class="tool-select"></select>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Sampling rate</strong></div>
+                    <div class="settings-rowline"><strong>Sampling rate</strong></div>
                     <select id="selRate" class="tool-select"></select>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Coupling</strong></div>
+                    <div class="settings-rowline"><strong>Coupling</strong></div>
                     <div class="seg--pill" id="segCouple" role="group" aria-label="Coupling">
                         <button class="seg__btn" type="button" data-value="ac">AC</button>
                         <button class="seg__btn" type="button" data-value="dc">DC</button>
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Dominant frequencies</strong><span class="set-val"
+                    <div class="settings-rowline"><strong>Dominant frequencies</strong><span class="settings-value"
                             id="peaksVal"></span></div>
-                    <input id="selPeaks" class="set-range" type="range" min="1" max="5" step="1">
+                    <input id="selPeaks" class="settings-range" type="range" min="1" max="5" step="1">
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Dominant freq. smoothing</strong></div>
+                    <div class="settings-rowline"><strong>Dominant freq. smoothing</strong></div>
                     <select id="selSmooth" class="tool-select"></select>
                 </div>
             </div>

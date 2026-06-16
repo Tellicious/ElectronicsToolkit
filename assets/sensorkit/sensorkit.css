@@ -31,49 +31,6 @@
   text-overflow: ellipsis;
 }
 
-/* ---- Control bar ------------------------------------------------------ */
-.sk-controls {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.sk-btn {
-  padding: 12px;
-  border-radius: var(--r-md);
-  font-size: 15px;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  color: var(--ink);
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-}
-
-.sk-btn:active {
-  transform: scale(0.99);
-}
-
-.sk-btn--primary {
-  grid-column: 1 / -1;
-  background: var(--accent);
-  color: #fff;
-  border-color: transparent;
-}
-
-.sk-btn--stop {
-  background: var(--bad, #ff3b30);
-  color: #fff;
-  border-color: transparent;
-}
-
-.sk-btn:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
 /* ---- iOS-style on/off toggle ----------------------------------------- */
 .sk-switch {
   position: relative;
@@ -93,7 +50,7 @@
 .sk-switch__track {
   position: absolute;
   inset: 0;
-  background: var(--switch-off, #e9e9ea);
+  background: var(--switch-off);
   border-radius: 999px;
   transition: background 0.2s ease;
 }
@@ -112,7 +69,7 @@
 }
 
 .sk-switch input:checked+.sk-switch__track {
-  background: #34c759;
+  background: var(--switch-on);
 }
 
 .sk-switch input:checked+.sk-switch__track::before {
@@ -245,7 +202,7 @@
   align-items: baseline;
   gap: 12px;
   padding: 9px 0;
-  border-bottom: 1px solid var(--hair, rgba(120, 120, 128, 0.2));
+  border-bottom: 1px solid var(--hair);
 }
 
 .sk-readout__row:last-child {
@@ -266,17 +223,48 @@
   text-align: right;
 }
 
-/* Centered status line. */
-.sk-status {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--ink-3);
-  min-height: 1.2em;
-}
-
 /* Label on a toggle row. */
 .sk-toggle-row__label {
   font-size: 16px;
   color: var(--ink);
+}
+/* ---- MultiPlot trace legend ------------------------------------------ */
+/* Tap a chip to show/hide its trace. Relocated here from motion.css now
+   that MultiPlot is a shared SensorKit component. */
+.sk-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.sk-legend__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sk-legend__chip:active {
+  transform: scale(0.98);
+}
+
+.sk-legend__chip--off {
+  opacity: 0.4;
+}
+
+.sk-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
 }

@@ -2,13 +2,13 @@
    Number Converter sub-app
    ========================================================= */
 
-.number-app {
+.number-converter-app {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-.number-shell {
+.number-converter-shell {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -20,24 +20,24 @@
   flex: 1;
 }
 
-.panel {
+.number-converter-panel {
   background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--r-lg);
   overflow: hidden;
 }
 
-.panel--input {
+.number-converter-panel--input {
   min-height: 124px;
   display: flex;
   flex-direction: column;
 }
 
-.panel--binary {
+.number-converter-panel--binary {
   padding: 0 10px 12px;
 }
 
-.panel__head {
+.number-converter-panel__head {
   min-height: 38px;
   display: flex;
   align-items: center;
@@ -46,20 +46,20 @@
   padding: 8px 12px 0;
 }
 
-.panel__label {
+.number-converter-panel__label {
   margin: 0;
   font-size: 19px;
   font-weight: 500;
   letter-spacing: -0.02em;
 }
 
-.panel__hint {
+.number-converter-panel__hint {
   color: var(--ink-3);
   font-size: 12px;
   white-space: nowrap;
 }
 
-.value-input {
+.number-converter-value-input {
   flex: 0 0 82px;
   margin-top: auto;
   width: 100%;
@@ -85,45 +85,45 @@
   scrollbar-width: none;
 }
 
-.value-input::-webkit-scrollbar {
+.number-converter-value-input::-webkit-scrollbar {
   display: none;
 }
 
-.value-input--mono {
+.number-converter-value-input--mono {
   font-family: var(--font-mono);
   font-size: var(--hex-font-size, 31px);
   letter-spacing: -0.025em;
 }
 
-.value-input::placeholder {
+.number-converter-value-input::placeholder {
   color: var(--ink-3);
 }
 
-.value-input:focus {
+.number-converter-value-input:focus {
   background: color-mix(in srgb, var(--accent-soft) 24%, transparent);
 }
 
-.binary-grid {
+.number-converter-binary-grid {
   padding-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.binary-row {
+.number-converter-binary-row {
   display: grid;
   grid-template-columns: repeat(16, minmax(0, 1fr));
   gap: 3px;
 }
 
-.bit-wrap {
+.number-converter-bit-wrap {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   min-width: 0;
 }
 
-.bit-btn {
+.number-converter-bit-btn {
   min-width: 0;
   height: 36px;
   border: 1px solid var(--border-strong);
@@ -136,25 +136,25 @@
   transition: transform 70ms ease, background 120ms ease, border-color 120ms ease;
 }
 
-.bit-btn:active {
+.number-converter-bit-btn:active {
   transform: scale(0.92);
 }
 
-.bit-btn[data-value="1"] {
+.number-converter-bit-btn[data-value="1"] {
   background: var(--surface);
   border-color: var(--border-strong);
 }
 
-.bit-btn[data-value="0"] {
+.number-converter-bit-btn[data-value="0"] {
   color: var(--ink-3);
 }
 
-.bit-btn:focus-visible {
+.number-converter-bit-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.bit-labels {
+.number-converter-bit-labels {
   display: grid;
   grid-template-columns: repeat(16, minmax(0, 1fr));
   gap: 3px;
@@ -163,15 +163,15 @@
   color: var(--ink-2);
 }
 
-.bit-label {
+.number-converter-bit-label {
   min-height: 12px;
 }
 
-.bit-label--end {
+.number-converter-bit-label--end {
   text-align: right;
 }
 
-.status {
+.number-converter-status {
   margin: -2px 0 0;
   min-height: 0;
   color: var(--ink-3);
@@ -179,74 +179,74 @@
   text-align: center;
 }
 
-.status--error {
+.number-converter-status--error {
   color: var(--bad);
 }
 
-.status--ok {
+.number-converter-status--ok {
   color: var(--ink-3);
 }
 
-.status:empty {
+.number-converter-status:empty {
   display: none;
 }
 
 @media (max-width: 390px) {
-  .number-shell {
+  .number-converter-shell {
     padding-left: calc(var(--safe-left) + 10px);
     padding-right: calc(var(--safe-right) + 10px);
   }
 
-  .panel__label {
+  .number-converter-panel__label {
     font-size: 18px;
   }
 
-  .value-input {
+  .number-converter-value-input {
     padding-top: 28px;
     padding-right: 18px;
     padding-bottom: 14px;
     padding-left: 18px;
   }
 
-  .bit-btn {
+  .number-converter-bit-btn {
     height: 34px;
     font-size: 20px;
     border-radius: 4px;
   }
 
-  .binary-row,
-  .bit-labels {
+  .number-converter-binary-row,
+  .number-converter-bit-labels {
     grid-template-columns: repeat(16, minmax(0, 1fr));
   }
 
-  .binary-row {
+  .number-converter-binary-row {
     gap: 2px;
   }
 
-  .bit-labels {
+  .number-converter-bit-labels {
     gap: 2px;
   }
 }
 
 @media (min-height: 760px) {
-  .number-shell {
+  .number-converter-shell {
     gap: 14px;
   }
 
-  .panel--input {
+  .number-converter-panel--input {
     min-height: 128px;
   }
 
-  .bit-btn {
+  .number-converter-bit-btn {
     height: 40px;
   }
 
-  .binary-grid {
+  .number-converter-binary-grid {
     gap: 14px;
   }
 }
 
-.panel--binary .panel__head {
+.number-converter-panel--binary .number-converter-panel__head {
   padding-left: 2px;
   padding-right: 2px;
 }

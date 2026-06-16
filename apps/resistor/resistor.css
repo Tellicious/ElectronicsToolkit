@@ -11,7 +11,7 @@
 
 /* ======== Views ======== */
 
-.view {
+.resistor-view {
   display: none;
   width: 100%;
   max-width: 600px;
@@ -21,7 +21,7 @@
     0 calc(var(--safe-right) + 14px) calc(var(--safe-bottom) + 14px) calc(var(--safe-left) + 14px);
 }
 
-.view[data-active="true"] {
+.resistor-view[data-active="true"] {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -31,7 +31,7 @@
 
 /* ======== PICKER ======== */
 
-.picker__top {
+.resistor-picker__top {
   padding: 8px 0 4px;
   flex: 0 0 auto;
 }
@@ -53,13 +53,13 @@
 }
 
 /* Inline readout: value + meta on one centered line */
-.picker__readout {
+.resistor-picker__readout {
   margin-top: 10px;
   text-align: center;
   padding-bottom: 6px;
 }
 
-.result__value {
+.resistor-result__value {
   font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -67,7 +67,7 @@
   line-height: 1.1;
 }
 
-.result__meta {
+.resistor-result__meta {
   margin-top: 3px;
   font-size: 11px;
   color: var(--ink-3);
@@ -75,13 +75,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-.result__meta .ok {
+.resistor-result__meta .resistor-ok {
   color: var(--good);
 }
 
 /* ======== Columns — fills remaining vertical space ======== */
 
-.picker__columns {
+.resistor-picker__columns {
   margin-top: 10px;
   display: grid;
   gap: 6px;
@@ -90,7 +90,7 @@
   /* columns set dynamically via inline style */
 }
 
-.col {
+.resistor-col {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -98,7 +98,7 @@
   min-height: 0;
 }
 
-.col__head {
+.resistor-col__head {
   font-size: 10px;
   font-weight: 600;
   text-align: center;
@@ -110,7 +110,7 @@
 }
 
 /* Inner wrapper distributes swatches evenly across remaining height */
-.col__cells {
+.resistor-col__cells {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -118,7 +118,7 @@
   min-height: 0;
 }
 
-.swatch {
+.resistor-swatch {
   position: relative;
   border-radius: 9px;
   flex: 1 1 0;
@@ -140,70 +140,70 @@
 
 /* On taller viewports, allow swatches to grow taller */
 @media (min-height: 700px) {
-  .swatch {
+  .resistor-swatch {
     min-height: 34px;
     font-size: 14px;
   }
 
-  .col__cells {
+  .resistor-col__cells {
     gap: 7px;
   }
 }
 
 @media (min-height: 800px) {
-  .swatch {
+  .resistor-swatch {
     min-height: 40px;
     font-size: 15px;
   }
 }
 
-.swatch--dark-text {
+.resistor-swatch--dark-text {
   color: rgba(0, 0, 0, 0.78);
 }
 
-.swatch--light-text {
+.resistor-swatch--light-text {
   color: rgba(255, 255, 255, 0.95);
 }
 
-.swatch:active {
+.resistor-swatch:active {
   transform: scale(0.95);
 }
 
-.swatch--selected {
+.resistor-swatch--selected {
   outline: 2.5px solid var(--ink);
   outline-offset: -2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   z-index: 1;
 }
 
-.swatch--disabled {
+.resistor-swatch--disabled {
   opacity: 0.18;
   pointer-events: none;
 }
 
-.swatch__label {
+.resistor-swatch__label {
   display: inline-block;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-/* ======== Reverse-lookup modal sheet ======== */
+/* ======== Reverse-lookup modal resistor-sheet ======== */
 
-.sheet {
+.resistor-sheet {
   position: fixed;
   inset: 0;
   z-index: 100;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  animation: sheetFade 180ms ease-out;
+  animation: resistor-sheet-fade 180ms ease-out;
 }
 
-.sheet[hidden] {
+.resistor-sheet[hidden] {
   display: none;
 }
 
-@keyframes sheetFade {
+@keyframes resistor-sheet-fade {
   from {
     opacity: 0;
   }
@@ -213,7 +213,7 @@
   }
 }
 
-@keyframes sheetSlide {
+@keyframes resistor-sheet-slide {
   from {
     transform: translateY(100%);
   }
@@ -223,7 +223,7 @@
   }
 }
 
-.sheet__scrim {
+.resistor-sheet__scrim {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.32);
@@ -231,7 +231,7 @@
   backdrop-filter: blur(2px);
 }
 
-.sheet__panel {
+.resistor-sheet__panel {
   position: relative;
   width: 100%;
   max-width: 560px;
@@ -241,10 +241,10 @@
   padding:
     10px calc(var(--safe-right) + 18px) calc(var(--safe-bottom) + 22px) calc(var(--safe-left) + 18px);
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18);
-  animation: sheetSlide 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: resistor-sheet-slide 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.sheet__grabber {
+.resistor-sheet__grabber {
   width: 38px;
   height: 4px;
   border-radius: 2px;
@@ -252,21 +252,21 @@
   margin: 4px auto 12px;
 }
 
-.sheet__head {
+.resistor-sheet__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 18px;
 }
 
-.sheet__title {
+.resistor-sheet__title {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.sheet__close {
+.resistor-sheet__close {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -276,11 +276,11 @@
   color: var(--ink-2);
 }
 
-.sheet__close:active {
+.resistor-sheet__close:active {
   background: var(--border);
 }
 
-.sheet__label {
+.resistor-sheet__label {
   display: block;
   font-size: 12px;
   font-weight: 500;
@@ -290,12 +290,12 @@
   margin-bottom: 8px;
 }
 
-.sheet__row {
+.resistor-sheet__row {
   display: flex;
   gap: 8px;
 }
 
-.sheet__input {
+.resistor-sheet__input {
   flex: 1;
   font: inherit;
   font-size: 17px;
@@ -307,13 +307,13 @@
   min-width: 0;
 }
 
-.sheet__input:focus {
+.resistor-sheet__input:focus {
   outline: 2px solid var(--accent);
   outline-offset: -1px;
   border-color: transparent;
 }
 
-.sheet__go {
+.resistor-sheet__go {
   padding: 12px 20px;
   background: var(--ink);
   color: var(--bg);
@@ -323,18 +323,18 @@
   transition: transform 80ms;
 }
 
-.sheet__go:active {
+.resistor-sheet__go:active {
   transform: scale(0.97);
 }
 
-.sheet__hint {
+.resistor-sheet__hint {
   margin: 12px 0 0;
   font-size: 13px;
   color: var(--ink-3);
   line-height: 1.5;
 }
 
-.sheet__hint code {
+.resistor-sheet__hint code {
   background: var(--surface-2);
   padding: 1px 6px;
   border-radius: 4px;
@@ -343,10 +343,10 @@
   color: var(--ink-2);
 }
 
-.sheet__hint .ok {
+.resistor-sheet__hint .resistor-ok {
   color: var(--good);
 }
 
-.sheet__hint .bad {
+.resistor-sheet__hint .resistor-bad {
   color: var(--bad);
 }

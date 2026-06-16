@@ -23,27 +23,27 @@
         <section class="tool-card">
             <h2 class="tool-card__title">Radio Time Signal</h2>
 
-            <div class="dcf-readout">
-                <div id="encTime" class="dcf-readout__time">—</div>
-                <div id="encZone" class="dcf-readout__zone"></div>
-                <div id="encSecond" class="dcf-readout__second"></div>
+            <div class="time-signal-readout">
+                <div id="encTime" class="time-signal-readout__time">—</div>
+                <div id="encZone" class="time-signal-readout__zone"></div>
+                <div id="encSecond" class="time-signal-readout__second"></div>
             </div>
 
-            <button id="playBtn" class="dcf-play" type="button">
-                <span class="dcf-play__icon" aria-hidden="true">
+            <button id="playBtn" class="btn btn--primary btn--block" type="button">
+                <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                         <path d="M8 5v14l11-7z" />
                     </svg>
                 </span>
-                <span class="dcf-play__label">Play</span>
+                <span class="btn__label">Play</span>
             </button>
 
-            <div id="status" class="dcf-status"></div>
+            <div id="status" class="status-line"></div>
 
-            <div class="tool-row"><label><span class="tool-label">Station</span></label><select id="station"
-                    class="tool-select" aria-label="Station"></select></div>
-            <div class="tool-row"><label><span class="tool-label">Carrier</span></label><select id="carrier"
-                    class="tool-select" aria-label="Carrier frequency"></select></div>
+            <div class="tool-row tool-row--stack"><label><span class="tool-label">Station</span></label><select id="station"
+                    class="tool-select tool-select--truncate" aria-label="Station"></select></div>
+            <div class="tool-row tool-row--stack"><label><span class="tool-label">Carrier</span></label><select id="carrier"
+                    class="tool-select tool-select--truncate" aria-label="Carrier frequency"></select></div>
 
             <p class="tool-note">Emulates the long-wave time-code stations used by radio-controlled clocks, transmitting
                 the same time code each real station broadcasts: <strong>DCF77</strong> (Germany), <strong>WWVB</strong>

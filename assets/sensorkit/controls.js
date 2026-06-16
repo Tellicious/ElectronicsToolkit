@@ -11,11 +11,11 @@
       this.state = 'idle';
       this.hasData = false;
       this.canLog = false;
-      container.classList.add('sk-controls');
+      container.classList.add('btn-row');
       container.innerHTML =
-        '<button class="sk-btn sk-btn--primary" data-a="primary" type="button">Start</button>' +
-        '<button class="sk-btn" data-a="reset" type="button">Reset</button>' +
-        '<button class="sk-btn" data-a="log" type="button">Save Log</button>';
+        '<button class="btn btn--primary" data-a="primary" type="button">Start</button>' +
+        '<button class="btn" data-a="reset" type="button">Reset</button>' +
+        '<button class="btn" data-a="log" type="button">Save Log</button>';
       this.primary = container.querySelector('[data-a="primary"]');
       this.resetBtn = container.querySelector('[data-a="reset"]');
       this.logBtn = container.querySelector('[data-a="log"]');
@@ -34,7 +34,7 @@
     render() {
       const running = this.state === 'running';
       this.primary.textContent = running ? 'Stop' : (this.state === 'paused' ? 'Resume' : 'Start');
-      this.primary.classList.toggle('sk-btn--stop', running);
+      this.primary.classList.toggle('btn--stop', running);
       this.resetBtn.disabled = running || !this.hasData;
       this.logBtn.disabled = running || !this.canLog;
     }

@@ -27,7 +27,7 @@
             <h2 class="tool-card__title">Motion</h2>
             <div class="motion-axes">
                 <div class="motion-axis">
-                    <div class="motion-axis__name" style="color:#ff3b30">X</div>
+                    <div class="motion-axis__name motion-axis__name--x">X</div>
                     <div class="motion-axis__cur"><span id="curX">—</span><span class="motion-axis__u"
                             id="uAccX">m/s²</span></div>
                     <div class="motion-axis__row"><span class="motion-axis__k">RMS</span><span id="rmsX">—</span></div>
@@ -36,7 +36,7 @@
                             class="motion-axis__u" id="uGyrX">°/s</span></div>
                 </div>
                 <div class="motion-axis">
-                    <div class="motion-axis__name" style="color:#34c759">Y</div>
+                    <div class="motion-axis__name motion-axis__name--y">Y</div>
                     <div class="motion-axis__cur"><span id="curY">—</span><span class="motion-axis__u"
                             id="uAccY">m/s²</span></div>
                     <div class="motion-axis__row"><span class="motion-axis__k">RMS</span><span id="rmsY">—</span></div>
@@ -45,7 +45,7 @@
                             class="motion-axis__u" id="uGyrY">°/s</span></div>
                 </div>
                 <div class="motion-axis">
-                    <div class="motion-axis__name" style="color:#0a84ff">Z</div>
+                    <div class="motion-axis__name motion-axis__name--z">Z</div>
                     <div class="motion-axis__cur"><span id="curZ">—</span><span class="motion-axis__u"
                             id="uAccZ">m/s²</span></div>
                     <div class="motion-axis__row"><span class="motion-axis__k">RMS</span><span id="rmsZ">—</span></div>
@@ -58,7 +58,7 @@
                 <div class="sk-readout__row"><span class="sk-readout__label">Dominant frequency</span><span id="domFreq"
                         class="sk-readout__value">— Hz</span></div>
             </div>
-            <div id="status" class="sk-status">Tap Start to begin (motion permission required).</div>
+            <div id="status" class="status-line">Tap Start to begin (motion permission required).</div>
         </section>
 
         <!-- Controls + CSV -->
@@ -97,7 +97,7 @@
                 start · double-tap to resume the live view.</p>
 
             <div class="settings-item settings-item--stack" style="border:0;padding:8px 0 4px">
-                <div class="set-rowline"><strong>Analyse</strong></div>
+                <div class="settings-rowline"><strong>Analyse</strong></div>
                 <select id="selTarget" class="tool-select"></select>
             </div>
             <div class="sk-panel" data-panel style="margin-top:6px">
@@ -128,21 +128,21 @@
             <h2 class="tool-card__title">Measurement</h2>
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Acceleration source</strong></div>
+                    <div class="settings-rowline"><strong>Acceleration source</strong></div>
                     <div class="seg--pill" id="segSource" role="group" aria-label="Acceleration source">
                         <button class="seg__btn" type="button" data-value="linear">Linear</button>
                         <button class="seg__btn" type="button" data-value="gravity">+ Gravity</button>
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Acceleration unit</strong></div>
+                    <div class="settings-rowline"><strong>Acceleration unit</strong></div>
                     <div class="seg--pill" id="segAccUnit" role="group" aria-label="Acceleration unit">
                         <button class="seg__btn" type="button" data-value="ms2">m/s²</button>
                         <button class="seg__btn" type="button" data-value="g">g</button>
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Rotation unit</strong></div>
+                    <div class="settings-rowline"><strong>Rotation unit</strong></div>
                     <div class="seg--pill" id="segGyrUnit" role="group" aria-label="Rotation unit">
                         <button class="seg__btn" type="button" data-value="dps">°/s</button>
                         <button class="seg__btn" type="button" data-value="rads">rad/s</button>
@@ -156,41 +156,41 @@
             <h2 class="tool-card__title">FFT</h2>
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Window function</strong></div>
+                    <div class="settings-rowline"><strong>Window function</strong></div>
                     <select id="selWindow" class="tool-select"></select>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Window length (samples)</strong></div>
+                    <div class="settings-rowline"><strong>Window length (samples)</strong></div>
                     <select id="selSize" class="tool-select"></select>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Coupling</strong></div>
+                    <div class="settings-rowline"><strong>Coupling</strong></div>
                     <div class="seg--pill" id="segCouple" role="group" aria-label="Coupling">
                         <button class="seg__btn" type="button" data-value="ac">AC</button>
                         <button class="seg__btn" type="button" data-value="dc">DC</button>
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Frequency axis</strong></div>
+                    <div class="settings-rowline"><strong>Frequency axis</strong></div>
                     <div class="seg--pill" id="segLogX" role="group" aria-label="Frequency axis">
                         <button class="seg__btn" type="button" data-value="lin">Linear</button>
                         <button class="seg__btn" type="button" data-value="log">Log</button>
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Amplitude axis</strong></div>
+                    <div class="settings-rowline"><strong>Amplitude axis</strong></div>
                     <div class="seg--pill" id="segDb" role="group" aria-label="Amplitude axis">
                         <button class="seg__btn" type="button" data-value="lin">Linear</button>
                         <button class="seg__btn" type="button" data-value="db">dB</button>
                     </div>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Dominant frequencies</strong><span class="set-val"
+                    <div class="settings-rowline"><strong>Dominant frequencies</strong><span class="settings-value"
                             id="peaksVal"></span></div>
-                    <input id="selPeaks" class="set-range" type="range" min="1" max="5" step="1">
+                    <input id="selPeaks" class="settings-range" type="range" min="1" max="5" step="1">
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Dominant freq. smoothing</strong></div>
+                    <div class="settings-rowline"><strong>Dominant freq. smoothing</strong></div>
                     <select id="selSmooth" class="tool-select"></select>
                 </div>
             </div>

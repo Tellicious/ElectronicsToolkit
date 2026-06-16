@@ -69,8 +69,8 @@
 
   function setStatus(message = '', isError = false) {
     statusText.textContent = message;
-    statusText.classList.toggle('status--error', Boolean(isError));
-    statusText.classList.toggle('status--ok', Boolean(message && !isError));
+    statusText.classList.toggle('number-converter-status--error', Boolean(isError));
+    statusText.classList.toggle('number-converter-status--ok', Boolean(message && !isError));
   }
 
   function measureTextWidth(text, input, sizePx) {
@@ -129,7 +129,7 @@
 
   function renderBinary(num) {
     const bits = toBinary64(num);
-    binaryGrid.querySelectorAll('.bit-btn').forEach((button) => {
+    binaryGrid.querySelectorAll('.number-converter-bit-btn').forEach((button) => {
       const bitIndex = Number(button.dataset.bit);
       const bitValue = bits[BIT_COUNT - 1 - bitIndex];
       button.textContent = bitValue;
@@ -168,31 +168,31 @@
     for (let row = 0; row < 4; row += 1) {
       const topBit = 63 - (row * 16);
       const rowEl = document.createElement('div');
-      rowEl.className = 'binary-row';
+      rowEl.className = 'number-converter-binary-row';
 
       for (let col = 0; col < 16; col += 1) {
         const bit = topBit - col;
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'bit-btn';
+        button.className = 'number-converter-bit-btn';
         button.dataset.bit = String(bit);
         button.addEventListener('click', () => flipBit(bit));
         rowEl.appendChild(button);
       }
 
       const labels = document.createElement('div');
-      labels.className = 'bit-labels';
+      labels.className = 'number-converter-bit-labels';
       for (let col = 0; col < 16; col += 1) {
         const label = document.createElement('span');
-        label.className = 'bit-label';
+        label.className = 'number-converter-bit-label';
         const bit = topBit - col;
         if (bit % 8 === 7 || bit === 0) label.textContent = String(bit);
-        if (bit === 0) label.classList.add('bit-label--end');
+        if (bit === 0) label.classList.add('number-converter-bit-label--end');
         labels.appendChild(label);
       }
 
       const wrap = document.createElement('div');
-      wrap.className = 'bit-wrap';
+      wrap.className = 'number-converter-bit-wrap';
       wrap.append(rowEl, labels);
       binaryGrid.appendChild(wrap);
     }

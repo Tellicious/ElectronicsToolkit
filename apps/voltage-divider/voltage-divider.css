@@ -1,0 +1,36 @@
+/* Voltage Divider — app-specific styles (uses shared design tokens).
+   The show/hide toggle uses the shared .is-hidden utility in styles.css. */
+
+.voltage-divider-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: left;
+}
+
+.voltage-divider-pair__item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+}
+
+.voltage-divider-pair__label {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.voltage-divider-pair__val {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+}
+
+.voltage-divider-pair__sub {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 3px;
+}

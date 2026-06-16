@@ -120,8 +120,8 @@
 
     function setMode(mode) {
         paintSeg('segMode', 'mode', mode);
-        document.getElementById('modeVout').classList.toggle('vd-hide', mode !== 'vout');
-        document.getElementById('modeDesign').classList.toggle('vd-hide', mode !== 'design');
+        document.getElementById('modeVout').classList.toggle('is-hidden', mode !== 'vout');
+        document.getElementById('modeDesign').classList.toggle('is-hidden', mode !== 'design');
     }
 
     const segMode = document.getElementById('segMode');

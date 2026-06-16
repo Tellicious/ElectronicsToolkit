@@ -2,34 +2,6 @@
  * Built on the shared design tokens in styles.css.
  */
 
-/* Instrument selector: segmented control that wraps on narrow screens. */
-.tuner-instruments {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 4px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-}
-
-.tuner-instruments .seg__btn {
-  flex: 1 1 auto;
-  min-width: 45px;
-  border-radius: var(--r-pill);
-  padding: 9px 10px;
-  font-size: 14px;
-  font-weight: 650;
-  color: var(--ink-2);
-  text-align: center;
-}
-
-.tuner-instruments .seg__btn--active {
-  background: var(--surface);
-  color: var(--accent);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
-}
-
 /* Note readout. */
 .tuner-note {
   display: flex;
@@ -156,37 +128,6 @@
   min-height: 1.2em;
 }
 
-.tuner-status {
-  text-align: center;
-  font-size: 13px;
-  color: var(--ink-3);
-  margin-top: 6px;
-  min-height: 1.2em;
-}
-
-.tuner-start {
-  display: block;
-  width: 100%;
-  margin-top: 12px;
-  padding: 14px;
-  border: none;
-  border-radius: var(--r-md);
-  background: var(--accent);
-  color: #fff;
-  font-size: 17px;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.tuner-start:active {
-  transform: scale(0.99);
-}
-
-.tuner-start[hidden] {
-  display: none;
-}
-
 /* String chips (instrument modes). */
 .tuner-strings {
   display: flex;
@@ -218,8 +159,4 @@
   border-color: var(--good);
   color: #fff;
   background: var(--good);
-}
-
-#stringCard[hidden] {
-  display: none;
 }

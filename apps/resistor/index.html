@@ -44,45 +44,45 @@
   </header>
 
   <!-- ====================== PICKER VIEW ====================== -->
-  <section class="view view--picker" id="view-picker" data-active="true">
+  <section class="resistor-view resistor-view--picker" id="view-picker" data-active="true">
 
     <!-- Compact hero: render + value -->
-    <div class="picker__top">
+    <div class="resistor-picker__top">
       <div class="resistor-render" id="resistorRender" aria-label="Resistor preview"></div>
 
-      <div class="picker__readout">
-        <div class="result__value" id="resultValue">—</div>
-        <div class="result__meta" id="resultMeta"></div>
+      <div class="resistor-picker__readout">
+        <div class="resistor-result__value" id="resultValue">—</div>
+        <div class="resistor-result__meta" id="resultMeta"></div>
       </div>
     </div>
 
     <!-- Column picker fills remaining space -->
-    <div class="picker__columns" id="pickerColumns">
+    <div class="resistor-picker__columns" id="pickerColumns">
       <!-- columns rendered by JS -->
     </div>
   </section>
 
-  <!-- Reverse-lookup modal sheet -->
-  <div class="sheet" id="lookupSheet" hidden aria-modal="true" role="dialog" aria-labelledby="lookupTitle">
-    <div class="sheet__scrim" data-close></div>
-    <div class="sheet__panel" role="document">
-      <div class="sheet__grabber" aria-hidden="true"></div>
-      <header class="sheet__head">
-        <h2 class="sheet__title" id="lookupTitle">Reverse lookup</h2>
-        <button class="sheet__close" data-close aria-label="Close">
+  <!-- Reverse-lookup modal resistor-sheet -->
+  <div class="resistor-sheet" id="lookupSheet" hidden aria-modal="true" role="dialog" aria-labelledby="lookupTitle">
+    <div class="resistor-sheet__scrim" data-close></div>
+    <div class="resistor-sheet__panel" role="document">
+      <div class="resistor-sheet__grabber" aria-hidden="true"></div>
+      <header class="resistor-sheet__head">
+        <h2 class="resistor-sheet__title" id="lookupTitle">Reverse lookup</h2>
+        <button class="resistor-sheet__close" data-close aria-label="Close">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
           </svg>
         </button>
       </header>
-      <div class="sheet__body">
-        <label class="sheet__label" for="reverseInput">Enter a resistance value</label>
-        <div class="sheet__row">
-          <input type="text" class="sheet__input" id="reverseInput" placeholder="e.g. 4.7k, 220, 1M, 4k7"
+      <div class="resistor-sheet__body">
+        <label class="resistor-sheet__label" for="reverseInput">Enter a resistance value</label>
+        <div class="resistor-sheet__row">
+          <input type="text" class="resistor-sheet__input" id="reverseInput" placeholder="e.g. 4.7k, 220, 1M, 4k7"
             autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-          <button class="sheet__go" id="reverseGo">Show</button>
+          <button class="resistor-sheet__go" id="reverseGo">Show</button>
         </div>
-        <p class="sheet__hint" id="reverseHint">Accepts forms like <code>4.7k</code>, <code>4k7</code>,
+        <p class="resistor-sheet__hint" id="reverseHint">Accepts forms like <code>4.7k</code>, <code>4k7</code>,
           <code>220</code>, <code>1M</code>.
         </p>
       </div>

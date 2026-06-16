@@ -1,13 +1,16 @@
-/* time-signal generator — app-specific styles (uses shared design tokens). */
+/* time-signal generator — app-specific styles (uses shared design tokens).
+   The play button, status line, and stacked station picker now reuse shared
+   primitives in styles.css: .btn / .btn--primary / .btn--block / .btn--stop /
+   .btn__icon, .status-line, .tool-row--stack, and .tool-select--truncate. */
 
-.dcf-readout {
+.time-signal-readout {
   display: grid;
   gap: 4px;
   text-align: center;
   padding: 14px 0 4px;
 }
 
-.dcf-readout__time {
+.time-signal-readout__time {
   font-family: var(--font-mono);
   font-size: 30px;
   font-weight: 700;
@@ -15,69 +18,12 @@
   letter-spacing: 0.5px;
 }
 
-.dcf-readout__zone {
+.time-signal-readout__zone {
   font-size: 14px;
   color: var(--ink-2);
 }
 
-.dcf-readout__second {
+.time-signal-readout__second {
   font-size: 13px;
   color: var(--ink-3);
-}
-
-.dcf-play {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  margin-top: 6px;
-  padding: 16px;
-  border: none;
-  border-radius: var(--r-md);
-  background: var(--accent);
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.dcf-play--on {
-  background: var(--bad);
-}
-
-.dcf-play__icon {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.dcf-status {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--ink-3);
-  min-height: 1.2em;
-}
-
-/* Stack label above its control so long station names use the full width
-   instead of expanding the select over the label. */
-.tool-row {
-  display: block;
-  margin-top: 14px;
-}
-
-.tool-row>label {
-  display: block;
-}
-
-/* Both selects render at the same size; the longest station name fits without
-   WebKit shrinking it, so Station and Carrier match. */
-.tool-select {
-  font-size: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

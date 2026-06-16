@@ -9,66 +9,6 @@
     <link rel="manifest" href="../../manifest.json">
     <link rel="stylesheet" href="../../assets/styles.css">
     <script src="../../assets/app.js"></script>
-    <style>
-        .settings-item--stack {
-            display: block;
-        }
-
-        .settings-item--stack .seg--pill {
-            margin-top: 10px;
-        }
-
-        .set-rowline {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 12px;
-        }
-
-        .set-val {
-            color: var(--ink-2);
-            font-weight: 600;
-            font-size: 17px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .set-range {
-            display: block;
-            width: 100%;
-            margin-top: 12px;
-            accent-color: var(--accent);
-        }
-
-        .storage-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        .storage-btn {
-            padding: 12px;
-            border-radius: var(--r-md);
-            font-size: 15px;
-            font-weight: 600;
-            border: 1px solid var(--border);
-            background: var(--surface-2);
-            color: var(--accent);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .storage-btn:active {
-            transform: scale(0.99);
-        }
-
-        .storage-btn:disabled {
-            opacity: 0.5;
-        }
-
-        .storage-btn--danger {
-            color: var(--bad);
-        }
-    </style>
     <title>Settings — Electronics Toolkit</title>
 </head>
 
@@ -99,14 +39,14 @@
             <h2 class="tool-card__title">Storage</h2>
             <div class="settings-list">
                 <div class="settings-item settings-item--stack">
-                    <div class="set-rowline"><strong>Offline cache</strong><span class="set-val"
+                    <div class="settings-rowline"><strong>Offline cache</strong><span class="settings-value"
                             id="cacheSize">…</span></div>
                     <span>Pages, scripts and assets saved on this device so the app works offline.</span>
                 </div>
             </div>
-            <div class="storage-actions">
-                <button class="storage-btn" id="recacheBtn" type="button">Re-download</button>
-                <button class="storage-btn storage-btn--danger" id="clearBtn" type="button">Clear cache</button>
+            <div class="btn-row">
+                <button class="btn btn--accent" id="recacheBtn" type="button">Re-download</button>
+                <button class="btn btn--danger" id="clearBtn" type="button">Clear cache</button>
             </div>
             <p id="storageStatus" class="tool-note" aria-live="polite"></p>
         </section>

@@ -23,7 +23,7 @@
 
         <section class="tool-card">
             <h2 class="tool-card__title">Tuner</h2>
-            <div class="tuner-instruments" id="segInstrument" role="group" aria-label="Instrument"></div>
+            <div class="seg seg--pill seg--wrap" id="segInstrument" role="group" aria-label="Instrument"></div>
         </section>
 
         <section class="tool-card">
@@ -43,9 +43,9 @@
             <div class="tuner-scale"><span>-50</span><span>0</span><span>+50</span></div>
 
             <div class="tuner-freq" id="freqVal"></div>
-            <div id="status" class="tuner-status">Starting…</div>
+            <div id="status" class="status-line">Starting…</div>
 
-            <button class="tuner-start" id="startBtn" type="button" hidden>
+            <button class="btn btn--primary btn--block" id="startBtn" type="button" hidden>
                 <span id="startLabel">Tap to start listening</span>
             </button>
         </section>

@@ -300,23 +300,23 @@ function renderColumns() {
 
   kinds.forEach((kind, slotIdx) => {
     const col = document.createElement('div');
-    col.className = 'col';
+    col.className = 'resistor-col';
 
     const head = document.createElement('div');
-    head.className = 'col__head';
+    head.className = 'resistor-col__head';
     head.textContent = heads[slotIdx];
     col.appendChild(head);
 
     // Cells wrapper: flex-grows to fill column, distributes swatches evenly
     const cells = document.createElement('div');
-    cells.className = 'col__cells';
+    cells.className = 'resistor-col__cells';
 
     // Render every color row in the same order across columns,
     // disabling invalid ones (rather than hiding) — keeps alignment.
     COLORS.forEach(c => {
       const allowed = VALID[kind].includes(c.id);
       const sw = document.createElement('button');
-      sw.className = 'swatch ' + (c.darkText ? 'swatch--dark-text' : 'swatch--light-text');
+      sw.className = 'resistor-swatch ' + (c.darkText ? 'resistor-swatch--dark-text' : 'resistor-swatch--light-text');
       sw.style.background = c.hex;
       sw.dataset.colorId = c.id;
       sw.dataset.slot = slotIdx;
@@ -327,16 +327,16 @@ function renderColumns() {
       else if (kind === 'multiplier') label = c.mult !== null ? formatMultiplierLabel(c.mult) : '';
       else if (kind === 'tolerance') label = c.tol !== null ? `±${c.tol}%` : '';
 
-      sw.innerHTML = `<span class="swatch__label">${label}</span>`;
+      sw.innerHTML = `<span class="resistor-swatch__label">${label}</span>`;
 
       if (!allowed) {
-        sw.classList.add('swatch--disabled');
+        sw.classList.add('resistor-swatch--disabled');
         sw.setAttribute('aria-hidden', 'true');
         sw.tabIndex = -1;
       } else {
         // White swatch needs a subtle border so it's not invisible
         if (c.id === 'white') sw.style.border = '1px solid var(--border-strong)';
-        if (picks[slotIdx] === c.id) sw.classList.add('swatch--selected');
+        if (picks[slotIdx] === c.id) sw.classList.add('resistor-swatch--selected');
         sw.addEventListener('click', () => onSwatchClick(slotIdx, c.id));
       }
       cells.appendChild(sw);
@@ -497,7 +497,7 @@ function bandsForValue(value, mode) {
 function doReverseLookup() {
   const value = parseResistance(els.reverseIn.value);
   if (value === null) {
-    els.reverseHint.innerHTML = `<span class="bad">Couldn't parse that.</span> Try <code>4.7k</code>, <code>220</code>, <code>1M</code>, or <code>4k7</code>.`;
+    els.reverseHint.innerHTML = `<span class="resistor-bad">Couldn't parse that.</span> Try <code>4.7k</code>, <code>220</code>, <code>1M</code>, or <code>4k7</code>.`;
     return;
   }
   const result = bandsForValue(value, state.mode);
@@ -508,8 +508,8 @@ function doReverseLookup() {
   setCurrentPicks(result.picks);
   renderAll();
   els.reverseHint.innerHTML = result.exact
-    ? `<span class="ok">✓ Showing colours for <strong>${formatOhms(value)}</strong>.</span>`
-    : `<span class="ok">✓ Showing colours for nearest representable value.</span>`;
+    ? `<span class="resistor-ok">✓ Showing colours for <strong>${formatOhms(value)}</strong>.</span>`
+    : `<span class="resistor-ok">✓ Showing colours for nearest representable value.</span>`;
   // Auto-close after a short delay so the user sees the confirmation
   setTimeout(closeLookup, 650);
 }

@@ -26,6 +26,16 @@
   --warn: #b58419;
   --bad: #b23a2e;
 
+  /* Hairline separators, iOS switch track, and signal-axis colours.
+     Theme-agnostic (translucent hairline + iOS system colours), so they are
+     defined once here and intentionally not overridden per theme. */
+  --hair: rgba(120, 120, 128, 0.2);
+  --switch-off: #e9e9ea;
+  --switch-on: #34c759;
+  --axis-x: #ff3b30;
+  --axis-y: #34c759;
+  --axis-z: #0a84ff;
+
   /* Geometry */
   --r-sm: 8px;
   --r-md: 12px;
@@ -131,10 +141,6 @@ button {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-}
-
-.hub__header {
-  margin-bottom: 20px;
 }
 
 .hub__title {
@@ -423,7 +429,7 @@ button {
 
 .tool-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) minmax(38px, auto);
   gap: 10px;
   align-items: end;
   margin-top: 10px;
@@ -467,6 +473,7 @@ button {
   line-height: 1.05;
   font-weight: 750;
   letter-spacing: -.035em;
+  font-variant-numeric: tabular-nums;
 }
 
 .tool-result__meta {
@@ -518,6 +525,7 @@ button {
   z-index: 20;
   margin-left: -20px;
   margin-right: -20px;
+  margin-bottom: 20px;
   padding: calc(var(--safe-top) + 16px) 20px 18px;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   -webkit-backdrop-filter: saturate(180%) blur(18px);
@@ -588,17 +596,8 @@ button {
   vector-effect: non-scaling-stroke;
 }
 
-.tool-result__value {
-  font-variant-numeric: tabular-nums;
-}
-
 
 /* Input alignment polish: numeric fields right-aligned, units centered vertically */
-.tool-row {
-  align-items: end;
-  grid-template-columns: minmax(0, 1fr) minmax(38px, auto);
-}
-
 .tool-row>span,
 .tool-unit,
 .tool-unit-select {
@@ -658,7 +657,7 @@ button {
 }
 
 .settings-item--stack>.seg--pill,
-.settings-item--stack>.set-range,
+.settings-item--stack>.settings-range,
 .settings-item--stack>.tool-select {
   margin-top: 10px;
 }
@@ -668,22 +667,147 @@ button {
   max-width: none;
 }
 
-.set-range {
+.settings-range {
   display: block;
   width: 100%;
   accent-color: var(--accent);
 }
 
-.set-rowline {
+.settings-rowline {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
 }
 
-.set-val {
+.settings-value {
   color: var(--ink-2);
   font-weight: 600;
   font-size: 16px;
   font-variant-numeric: tabular-nums;
+}
+
+/* ============== SHARED ACTION BUTTONS / STATUS / UTILITIES ============== */
+/* Promoted from sensorkit so non-sensor pages (Settings, Time Signal, Tuner)
+   share one button + status vocabulary instead of redefining their own. */
+
+/* Centered status line (was .sk-status / .dcf-status / .tuner-status). */
+.status-line {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+  min-height: 1.2em;
+}
+
+/* Standard button (was .sk-btn). */
+.btn {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn[hidden] {
+  display: none;
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+.btn--stop {
+  background: var(--bad);
+  border-color: transparent;
+  color: #fff;
+}
+
+.btn--accent {
+  color: var(--accent);
+}
+
+.btn--danger {
+  color: var(--bad);
+}
+
+/* Full-width call-to-action (was .dcf-play / .tuner-start). */
+.btn--block {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 14px;
+  font-size: 16px;
+}
+
+.btn__icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+/* Two-up button row with a full-width primary action (was .sk-controls). */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.btn-row .btn--primary {
+  grid-column: 1 / -1;
+}
+
+/* Wrapping pill segmented bar — denser buttons for long lists
+   (was .tuner-instruments; use as `seg seg--pill seg--wrap`). */
+.seg--wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.seg--wrap .seg__btn {
+  flex: 1 1 auto;
+  min-width: 45px;
+  padding: 9px 10px;
+  font-size: 14px;
+}
+
+/* Stacked tool-row: label above a full-width control (long select values). */
+.tool-row--stack {
+  display: block;
+  margin-top: 14px;
+}
+
+.tool-row--stack>label {
+  display: block;
+}
+
+.tool-select--truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Generic visibility utility. */
+.is-hidden {
+  display: none !important;
 }

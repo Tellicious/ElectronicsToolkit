@@ -24,6 +24,18 @@
   margin-bottom: 5px;
 }
 
+.motion-axis__name--x {
+  color: var(--axis-x);
+}
+
+.motion-axis__name--y {
+  color: var(--axis-y);
+}
+
+.motion-axis__name--z {
+  color: var(--axis-z);
+}
+
 /* Current acceleration — the largest value in each box. */
 .motion-axis__cur {
   font-family: var(--font-mono);
@@ -82,45 +94,4 @@
   line-height: 1.4;
   color: var(--ink-3);
   text-align: center;
-}
-
-/* Legend for MultiPlot traces (tap a chip to show/hide that trace).
-   Lives here for now since Motion is the only consumer; move into
-   sensorkit.css if other apps start using MultiPlot. */
-.sk-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.sk-legend__chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  color: var(--ink-2);
-  font-size: 12px;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.sk-legend__chip:active {
-  transform: scale(0.98);
-}
-
-.sk-legend__chip--off {
-  opacity: 0.4;
-}
-
-.sk-legend__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex: none;
 }

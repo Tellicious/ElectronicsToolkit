@@ -233,8 +233,8 @@
 
   function setPlaying(on) {
     const btn = document.getElementById('playBtn');
-    btn.classList.toggle('dcf-play--on', on);
-    btn.querySelector('.dcf-play__label').textContent = on ? 'Stop' : 'Play';
+    btn.classList.toggle('btn--stop', on);
+    btn.querySelector('.btn__label').textContent = on ? 'Stop' : 'Play';
     document.getElementById('station').disabled = on;
     document.getElementById('carrier').disabled = on;
   }

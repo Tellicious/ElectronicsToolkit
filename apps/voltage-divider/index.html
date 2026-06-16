@@ -8,46 +8,8 @@
     <meta name="theme-color" content="#f2f2f7">
     <link rel="manifest" href="../../manifest.json">
     <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="voltage-divider.css">
     <script src="../../assets/app.js"></script>
-    <style>
-        .vd-hide {
-            display: none;
-        }
-
-        .vd-pair {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            text-align: left;
-        }
-
-        .vd-pair__item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r-md);
-            padding: 10px 12px;
-        }
-
-        .vd-pair__label {
-            font-size: 12px;
-            color: var(--ink-3);
-        }
-
-        .vd-pair__val {
-            font-family: var(--font-mono);
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--ink);
-            font-variant-numeric: tabular-nums;
-            margin-top: 3px;
-        }
-
-        .vd-pair__sub {
-            font-size: 12px;
-            color: var(--ink-3);
-            margin-top: 3px;
-        }
-    </style>
     <title>Voltage Divider — Electronics Toolkit</title>
 </head>
 
@@ -96,7 +58,7 @@
                     <div id="vdMeta" class="tool-result__meta"></div>
                 </div>
             </div>
-            <div id="modeDesign" class="vd-hide">
+            <div id="modeDesign" class="is-hidden">
                 <div class="tool-row"><label><span class="tool-label">Input voltage</span><input id="dvin"
                             class="tool-input" inputmode="decimal"></label><span class="tool-unit">V</span></div>
                 <div class="tool-row"><label><span class="tool-label">Output voltage</span><input id="dvout"
@@ -113,16 +75,16 @@
                     </div>
                 </div>
                 <div class="tool-result">
-                    <div class="vd-pair">
-                        <div class="vd-pair__item">
-                            <div class="vd-pair__label">R1 (top)</div>
-                            <div id="dvR1" class="vd-pair__val">—</div>
-                            <div id="dvR1sub" class="vd-pair__sub"></div>
+                    <div class="voltage-divider-pair">
+                        <div class="voltage-divider-pair__item">
+                            <div class="voltage-divider-pair__label">R1 (top)</div>
+                            <div id="dvR1" class="voltage-divider-pair__val">—</div>
+                            <div id="dvR1sub" class="voltage-divider-pair__sub"></div>
                         </div>
-                        <div class="vd-pair__item">
-                            <div class="vd-pair__label">R2 (bottom)</div>
-                            <div id="dvR2" class="vd-pair__val">—</div>
-                            <div id="dvR2sub" class="vd-pair__sub"></div>
+                        <div class="voltage-divider-pair__item">
+                            <div class="voltage-divider-pair__label">R2 (bottom)</div>
+                            <div id="dvR2" class="voltage-divider-pair__val">—</div>
+                            <div id="dvR2sub" class="voltage-divider-pair__sub"></div>
                         </div>
                     </div>
                     <div id="dvMeta" class="tool-result__meta"></div>
