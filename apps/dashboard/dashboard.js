@@ -67,16 +67,21 @@
   let targetSpeed = 0, dispSpeed = 0, speedSeen = 0;     // km/h
   let prevFix = null;
   let gravX = 0, gravY = 0, gravZ = 0, gravInit = false;  // gravity estimate (fallback path)
-  let zeroX = 0, zeroZ = 0, zeroing = false, zeroAcc = null;
+  let zeroX = 0, zeroY = 0, zeroZ = 0, zeroing = false, zeroAcc = null;
   let curX = 0, curY = 0;                                 // smoothed current g (curX lateral, curY fore/aft)
   let lastSave = 0, lastPaint = 0;
+  let validCount = 0;
 
+  const MIN_VALID = 4;
   const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   const r2 = n => Math.round(n * 100) / 100;
   const num = (v, dash) => (Number.isFinite(v) ? v.toFixed(2) : dash);
 
   // --- Geolocation (speed) ----------------------------------------------
+
   function onPos(pos) {
+    if (pos.coords.accuracy > 50) { validCount = 0; return; }  // reset on bad fix
+    if (++validCount < MIN_VALID) return;  // need N consecutive good fixes
     const c = pos.coords, t = pos.timestamp;
     let mps = (typeof c.speed === 'number' && c.speed >= 0) ? c.speed : NaN;
     if (!Number.isFinite(mps) && prevFix) {
@@ -106,23 +111,32 @@
   // --- DeviceMotion (g-force) -------------------------------------------
   // Upright mount: device X → lateral, device Z → fore/aft, gravity on Y.
   function onMotion(e) {
-    let ax, az;
-    const a = e.acceleration;
-    if (a && Number.isFinite(a.x) && Number.isFinite(a.z)) {
-      ax = a.x; az = a.z;                       // OS linear acceleration (gravity removed)
-    } else {
-      const ag = e.accelerationIncludingGravity;
-      if (!ag || !Number.isFinite(ag.x) || !Number.isFinite(ag.y) || !Number.isFinite(ag.z)) return;
-      if (!gravInit) { gravX = ag.x; gravY = ag.y; gravZ = ag.z; gravInit = true; }
-      gravX = gravX * 0.99 + ag.x * 0.01;       // slow gravity estimate (~1.6 s)
+    const ag = e.accelerationIncludingGravity;
+    if (ag && Number.isFinite(ag.x) && Number.isFinite(ag.y) && Number.isFinite(ag.z)) {
+      if (!gravInit) { gravX = ag.x; gravY = ag.y; gravZ = ag.z; gravInit = true; }  // seed converged
+      gravX = gravX * 0.99 + ag.x * 0.01;        // slow gravity estimate (~1.6 s)
       gravY = gravY * 0.99 + ag.y * 0.01;
       gravZ = gravZ * 0.99 + ag.z * 0.01;
-      ax = ag.x - gravX; az = ag.z - gravZ;
     }
+
+    // Linear acceleration (gravity removed): prefer the OS value, else ag − gravity.
+    let ax, ay, az;
+    const a = e.acceleration;
+    if (a && Number.isFinite(a.x) && Number.isFinite(a.y) && Number.isFinite(a.z)) {
+      ax = a.x; ay = a.y; az = a.z;
+    } else if (ag && Number.isFinite(ag.x)) {
+      ax = ag.x - gravX; ay = ag.y - gravY; az = ag.z - gravZ;
+    } else { return; }
+
+    // Tilt-compensated fore/aft: project accel onto the true horizontal in the Y–Z
+    // plane (⊥ gravity). + = braking, like raw az was — but here the sign comes from
+    // gravity, so it's the same on iOS and Android and survives a pitched mount.
+    const mYZ = Math.hypot(gravY, gravZ) || 1;
+    const azC = (az * gravY - ay * gravZ) / mYZ;
 
     // Auto-zero: average the first ~0.6 s after Start to null any resting bias.
     if (zeroing) {
-      zeroAcc.x += ax; zeroAcc.z += az; zeroAcc.n++;
+      zeroAcc.x += ax; zeroAcc.z += azC; zeroAcc.n++;
       if (performance.now() - zeroAcc.t0 >= 600) {
         zeroX = zeroAcc.x / Math.max(1, zeroAcc.n);
         zeroZ = zeroAcc.z / Math.max(1, zeroAcc.n);
@@ -132,14 +146,14 @@
       return;
     }
 
-    const lat = (ax - zeroX) / G;    // device X → lateral (+ = right turn, screen faces you)
-    const lon = (az - zeroZ) / G;    // device Z → fore/aft (+ = accelerating)
-    curX = curX * 0.75 + lat * 0.25; // light smoothing (dot + peaks)
+    const lat = (ax - zeroX) / G;   // device X → lateral (unchanged)
+    const lon = (azC - zeroZ) / G;   // tilt-compensated fore/aft (+ = braking)
+    curX = curX * 0.75 + lat * 0.25;
     curY = curY * 0.75 + lon * 0.25;
 
     if (running) {
-      if (-curY > gmax.brake) gmax.brake = -curY;     // -Z (down) = brake
-      if (curY > gmax.accel) gmax.accel = curY;    // +Z (up) = accel
+      if (curY > gmax.brake) gmax.brake = curY;     // +Z (up) = brake
+      if (-curY > gmax.accel) gmax.accel = -curY;    // -Z (down) = accel
       if (curX > gmax.right) gmax.right = curX;       // +X = right turn
       if (-curX > gmax.left) gmax.left = -curX;       // −X = left turn
       const mag = Math.hypot(curX, curY);
@@ -180,7 +194,7 @@
     gauge.update(dispSpeed);
     // Live dot (clamped just past the ring). +X→right, +Z(brake)→up.
     dot.setAttribute('cx', r2(clamp(PAD_C + curX * PAD_SCALE, 4, 196)));
-    dot.setAttribute('cy', r2(clamp(PAD_C + curY * PAD_SCALE, 4, 196)));
+    dot.setAttribute('cy', r2(clamp(PAD_C - curY * PAD_SCALE, 4, 196)));
     const now = performance.now();
     if (now - lastPaint > 100) { lastPaint = now; paintPeaks(); }
     rafId = requestAnimationFrame(loop);
@@ -205,7 +219,11 @@
     U.setText('status', 'Calibrating…');
     if (!rafId) loop();
     permP.then(perm => {
-      if (perm.ok) { gravInit = false; zeroAcc = { x: 0, z: 0, n: 0, t0: performance.now() }; zeroing = true; addMotion(); }
+      if (perm.ok) {
+        gravInit = false;
+        addMotion();
+        if (running) { zeroAcc = { x: 0, z: 0, n: 0, t0: performance.now() }; zeroing = true; }
+      }
       else { U.setText('status', perm.reason + ' · speed still works'); }
     });
   }

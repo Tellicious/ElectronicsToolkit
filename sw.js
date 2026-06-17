@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'electronicsToolkit-v1.0.37';
+const VERSION = 'electronicsToolkit-v1.0.38';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -37,6 +37,7 @@ const PRECACHE_ASSETS = [
   './assets/sensorkit/liveplot.js',
   './assets/sensorkit/fft.js',
   './assets/sensorkit/multiplot.js',
+  './assets/sensorkit/segmented.js',
   './assets/sensorkit/gauge.js',
   './assets/sensorkit/sensorkit.css',
   './assets/vendor/leaflet/leaflet.js',
@@ -54,12 +55,12 @@ const PRECACHE_ASSETS = [
   './apps/awg-converter/index.html',
   './apps/battery-life/index.html',
   './apps/capacitor/index.html',
+  './apps/dashboard/index.html',
   './apps/time-signal/index.html',
   './apps/tuner/index.html',
   './apps/gps/index.html',
   './apps/mic/index.html',
   './apps/motion/index.html',
-  './apps/dashboard/index.html',
   './apps/led-resistor/index.html',
   './apps/number-converter/index.html',
   './apps/op-amp-gain/index.html',
@@ -73,13 +74,13 @@ const PRECACHE_ASSETS = [
   './apps/awg-converter/awg-converter.js',
   './apps/battery-life/battery-life.js',
   './apps/capacitor/capacitor.js',
+  './apps/dashboard/dashboard.js',
   './apps/time-signal/time-signal.js',
   './apps/time-signal/time-signal-worklet.js',
   './apps/tuner/tuner.js',
   './apps/gps/gps.js',
   './apps/mic/mic.js',
   './apps/motion/motion.js',
-  './apps/dashboard/dashboard.js',
   './apps/led-resistor/led-resistor.js',
   './apps/number-converter/number-converter.js',
   './apps/op-amp-gain/op-amp-gain.js',
