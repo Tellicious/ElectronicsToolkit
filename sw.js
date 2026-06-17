@@ -15,7 +15,7 @@
 //    update) transparently re-caches everything from scratch and the old
 //    cache is dropped on activate.
 
-const VERSION = 'electronicsToolkit-v1.0.36';
+const VERSION = 'electronicsToolkit-v1.0.37';
 
 // Complete list of everything the app needs to run fully offline.
 // Keep this in sync when adding/removing files (it's the single source of
@@ -37,6 +37,7 @@ const PRECACHE_ASSETS = [
   './assets/sensorkit/liveplot.js',
   './assets/sensorkit/fft.js',
   './assets/sensorkit/multiplot.js',
+  './assets/sensorkit/gauge.js',
   './assets/sensorkit/sensorkit.css',
   './assets/vendor/leaflet/leaflet.js',
   './assets/vendor/leaflet/leaflet.css',
@@ -58,6 +59,7 @@ const PRECACHE_ASSETS = [
   './apps/gps/index.html',
   './apps/mic/index.html',
   './apps/motion/index.html',
+  './apps/dashboard/index.html',
   './apps/led-resistor/index.html',
   './apps/number-converter/index.html',
   './apps/op-amp-gain/index.html',
@@ -77,6 +79,7 @@ const PRECACHE_ASSETS = [
   './apps/gps/gps.js',
   './apps/mic/mic.js',
   './apps/motion/motion.js',
+  './apps/dashboard/dashboard.js',
   './apps/led-resistor/led-resistor.js',
   './apps/number-converter/number-converter.js',
   './apps/op-amp-gain/op-amp-gain.js',
@@ -90,6 +93,7 @@ const PRECACHE_ASSETS = [
   './apps/resistor/resistor.css',
   './apps/time-signal/time-signal.css',
   './apps/motion/motion.css',
+  './apps/dashboard/dashboard.css',
   './apps/tuner/tuner.css',
   './apps/voltage-divider/voltage-divider.css',
 ];
